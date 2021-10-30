@@ -8,6 +8,7 @@ public class tempPlayerMove : MonoBehaviour
     [SerializeField] private float camY;
     [SerializeField] private Camera cam;
     [SerializeField] private float maxShotDist;
+    [SerializeField] private float percntsCamDist;
 
     private CharacterController _controller;
     private Transform _transform;
@@ -31,7 +32,6 @@ public class tempPlayerMove : MonoBehaviour
     void Update()
     {
         mousePose = cam.WorldToScreenPoint(Input.mousePosition);
-        Debug.Log(mousePose);
        
         //transform.LookAt(mousePose);
     }
@@ -39,7 +39,8 @@ public class tempPlayerMove : MonoBehaviour
     {
         moveDir.x = Input.GetAxisRaw("Horizontal");
         moveDir.z = Input.GetAxisRaw("Vertical");
-        
+
+
         _controller.Move(moveDir * speed * Time.fixedDeltaTime);
         LookingLogic();
     }
@@ -58,7 +59,7 @@ public class tempPlayerMove : MonoBehaviour
                 newCamX = maxShotDist;
 
         }
-        newCamX = newCamX / 2 + _transform.position.x;
+        newCamX = newCamX * percntsCamDist + _transform.position.x;
 
         if (Mathf.Abs(targetPoint.z - _transform.position.z) < maxShotDist)
         {
@@ -71,7 +72,7 @@ public class tempPlayerMove : MonoBehaviour
             else
                 newCamZ = maxShotDist;
         }
-        newCamZ = newCamZ / 2 + _transform.position.z;
+        newCamZ = newCamZ * percntsCamDist + _transform.position.z;
 
 
         cam.transform.position = Vector3.Lerp(cam.transform.position,
@@ -80,9 +81,6 @@ public class tempPlayerMove : MonoBehaviour
                                                   camY,
                                                   newCamZ),
                                               VectoroTEmpo);
-        //cam.transform.position = new Vector3(Mathf.Min(targetPoint.x - _transform.position.x, maxShotDist) / 2 + _transform.position.x,
-        //                                     camY,
-        //                                     Mathf.Min(targetPoint.z - _transform.position.z, maxShotDist) / 2 + _transform.position.z);
     }
     private void LookingLogic()
     {
