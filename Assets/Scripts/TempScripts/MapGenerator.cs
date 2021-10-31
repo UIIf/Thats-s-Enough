@@ -20,22 +20,26 @@ public class MapGenerator : MonoBehaviour
     private GameObject[] generatedRoom;
     private GameObject[][] generatedMap;
 
+    private int outerLayerMask;
+    private int floorLayerMask;
+
     void Awake()
     {
         wallSize /= 2;
         _folowingTransform = folowing.GetComponent<Transform>();
         _transform = GetComponent<Transform>();
-        //FirstGenerateRoom();
+        outerLayerMask = LayerMask.GetMask("outerWall");
+        floorLayerMask = LayerMask.GetMask("floor");
         FirstGenerateRoom();
-        //ClearRoom(0);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         MoveGenerator();
     }
 
+
+    //Make discrete movements
     void MoveGenerator()
     {
         temp = (_folowingTransform.position - _transform.position);
@@ -51,6 +55,11 @@ public class MapGenerator : MonoBehaviour
                 _transform.position.y,
                 _transform.position.z
                 );
+            generatedRoom = GenerateRoom(-1, 0);
+            generatedRoom = GenerateRoom(1, 0);
+            generatedRoom = GenerateRoom(0, 0);
+            generatedRoom = GenerateRoom(0, 1);
+            generatedRoom = GenerateRoom(0, -1);
         }
 
         if (Mathf.Abs(temp.z) > sizeZ)
@@ -64,53 +73,62 @@ public class MapGenerator : MonoBehaviour
                 _transform.position.y,
                 maximilian * sizeZ
                 );
+            generatedRoom = GenerateRoom(-1, 0);
+            generatedRoom = GenerateRoom(1, 0);
+            generatedRoom = GenerateRoom(0, 0);
+            generatedRoom = GenerateRoom(0, 1);
+            generatedRoom = GenerateRoom(0, -1);
         }
     }
 
     void FirstGenerateRoom()
     {
-        generatedMap = new GameObject[25][];
-        generatedRoom = new GameObject[6];
-        generatedRoom[0] = Instantiate(RandomXWall(), new Vector3(_transform.position.x - sizeX + wallSize, 0, _transform.position.z), _transform.rotation);
-        generatedRoom[1] = Instantiate(RandomXWall(), new Vector3(_transform.position.x + sizeX - wallSize, 0, _transform.position.z), _transform.rotation);
-        generatedRoom[2] = Instantiate(RandomZWall(), new Vector3(_transform.position.x, 0, _transform.position.z - sizeZ + wallSize), _transform.rotation);
-        generatedRoom[3] = Instantiate(RandomZWall(), new Vector3(_transform.position.x, 0, _transform.position.z + sizeZ - wallSize), _transform.rotation);
-        generatedRoom[4] = Instantiate(floor, new Vector3(_transform.position.x, 0, _transform.position.z), floor.transform.rotation);
-        //generatedRoom[4] = Instantiate(corners, new Vector3(_transform.position.x, 0, _transform.position.z), _transform.rotation);
-        generatedMap[12] = generatedRoom;
-        GenerateLeft(1, 2);
-        GenerateRight(3, 2);
+        generatedRoom = GenerateRoom(-1, 0);
+        generatedRoom = GenerateRoom(1, 0);
+        generatedRoom = GenerateRoom(0, 0);
+        generatedRoom = GenerateRoom(0, 1);
+        generatedRoom = GenerateRoom(0, -1);
     }
 
-    void GenerateLeft(int indexX,int indexZ)
+    GameObject GenerateWall(float x, float z, bool hor = true)
     {
-        if (indexX >= 0 && indexX < 5)
+        GameObject to_ret;
+        Collider[] col = Physics.OverlapBox(new Vector3(x, 0, z), Vector3.one, _transform.rotation, outerLayerMask);
+
+        print(col.Length);
+        if (col.Length > 0)
         {
-            generatedRoom = new GameObject[6];
-            generatedRoom[0] = Instantiate(RandomXWall(), new Vector3(_transform.position.x - sizeX + wallSize - (2 - indexX) * sizeX * 2, 0, _transform.position.z), _transform.rotation);
-            generatedRoom[1] = Instantiate(generatedMap[indexZ * 5 + indexX+1][0], new Vector3(_transform.position.x + sizeX - wallSize - (2 - indexX) * sizeX * 2, 0, _transform.position.z), _transform.rotation);
-            generatedRoom[2] = Instantiate(RandomZWall(), new Vector3(_transform.position.x - (2 - indexX) * sizeX * 2, 0, _transform.position.z - sizeZ + wallSize), _transform.rotation);
-            generatedRoom[3] = Instantiate(RandomZWall(), new Vector3(_transform.position.x - (2 - indexX) * sizeX * 2, 0, _transform.position.z + sizeZ - wallSize), _transform.rotation);
-            generatedRoom[4] = Instantiate(floor, new Vector3(_transform.position.x - (2 - indexX) * sizeX * 2, 0, _transform.position.z), floor.transform.rotation);
-            generatedMap[indexZ * 5 + indexX] = generatedRoom;
-            GenerateLeft(indexX-1, indexZ);
+            to_ret = Instantiate(col[0].gameObject.transform.parent.gameObject, new Vector3(x, 0, z), _transform.rotation);
         }
+        else
+        {
+            if(hor)
+                to_ret = Instantiate(RandomXWall(), new Vector3(x, 0, z), _transform.rotation);
+            else
+                to_ret = Instantiate(RandomZWall(), new Vector3(x, 0, z), _transform.rotation);
+        }
+        return to_ret;
     }
 
-    void GenerateRight(int indexX, int indexZ)
+    GameObject[] GenerateRoom(int iX, int iZ)
     {
-        if (indexX >= 0 && indexX < 5)
+        float cZ = _transform.position.z + sizeZ * iZ * 2;
+        float cX = _transform.position.x + sizeX * iX * 2;
+        if (Physics.OverlapBox(new Vector3(cX, 0, cZ), Vector3.one, _transform.rotation, floorLayerMask).Length <= 0)
         {
             generatedRoom = new GameObject[6];
-            generatedRoom[0] = Instantiate(generatedMap[indexZ * 5 + indexX - 1][1], new Vector3(_transform.position.x - sizeX + wallSize - (2 - indexX) * sizeX * 2, 0, _transform.position.z), _transform.rotation);
-            generatedRoom[1] = Instantiate(RandomXWall(), new Vector3(_transform.position.x + sizeX - wallSize - (2 - indexX) * sizeX * 2, 0, _transform.position.z), _transform.rotation);
-            generatedRoom[2] = Instantiate(RandomZWall(), new Vector3(_transform.position.x - (2 - indexX) * sizeX * 2, 0, _transform.position.z - sizeZ + wallSize), _transform.rotation);
-            generatedRoom[3] = Instantiate(RandomZWall(), new Vector3(_transform.position.x - (2 - indexX) * sizeX * 2, 0, _transform.position.z + sizeZ - wallSize), _transform.rotation);
-            generatedRoom[4] = Instantiate(floor, new Vector3(_transform.position.x - (2 - indexX) * sizeX * 2, 0, _transform.position.z), floor.transform.rotation);
-            generatedMap[indexZ * 5 + indexX] = generatedRoom;
-            GenerateRight(indexX + 1, indexZ);
+            generatedRoom[0] = GenerateWall(cX - sizeX + wallSize, cZ);
+            generatedRoom[1] = GenerateWall(cX + sizeX - wallSize, cZ);
+            generatedRoom[2] = GenerateWall(cX, cZ - sizeZ + wallSize, false);
+            generatedRoom[3] = GenerateWall(cX, cZ + sizeZ - wallSize, false);
+            generatedRoom[4] = Instantiate(floor, new Vector3(cX, 0, cZ), floor.transform.rotation);
+            generatedRoom[5] = Instantiate(corners, new Vector3(cX, 0, cZ), _transform.rotation);
         }
+        else
+            generatedRoom = null;
+        return generatedRoom;
     }
+    
 
     GameObject RandomXWall()
     {

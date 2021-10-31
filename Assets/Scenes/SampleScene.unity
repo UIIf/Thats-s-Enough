@@ -207,7 +207,7 @@ MonoBehaviour:
   - {fileID: 6067076122219134641, guid: bd3bc6e0538a5474aa493cdb575bcff4, type: 3}
   outerWZ:
   - {fileID: 1258713758804103547, guid: 8d375258611e1b24f999839d1112acc4, type: 3}
-  corners: {fileID: 3155189635058829403, guid: f9275ff667a8a164ca58b2c6951580ad, type: 3}
+  corners: {fileID: 8174164086879850728, guid: 5503371f820e8144baa96c815e293e00, type: 3}
   floor: {fileID: 8681869996718657880, guid: 8f4ae91450a957147a8fdd2a4c78cb57, type: 3}
 --- !u!1 &533640456
 GameObject:
