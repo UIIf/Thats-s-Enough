@@ -23,7 +23,7 @@ public class RoomAndDist:MonoBehaviour
 }
 public class MapGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject folowing;
+    [SerializeField] private GameObject following;
     [SerializeField] private int sizeX;
     [SerializeField] private int sizeZ;
     [SerializeField] private float wallSize;
@@ -51,7 +51,7 @@ public class MapGenerator : MonoBehaviour
     {
         wallSize /= 2;
 
-        _folowingTransform = folowing.GetComponent<Transform>();
+        _folowingTransform = following.GetComponent<Transform>();
         _transform = GetComponent<Transform>();
 
         outerLayerMask = LayerMask.GetMask("outerWall");
