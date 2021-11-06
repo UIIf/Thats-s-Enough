@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class RoomAndDist:MonoBehaviour
+public class RoomAndDist
 {
     public GameObject gO;
     public float sDistance;
@@ -10,11 +10,6 @@ public class RoomAndDist:MonoBehaviour
     {
         gO = g;
         this.ResetDist(pos);
-    }
-    ~RoomAndDist()
-    {
-        print("n");
-        Destroy(gO);
     }
     public void ResetDist(Vector3 position)
     {
@@ -32,7 +27,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private GameObject[] outerWX;
     [SerializeField] private GameObject[] outerWZ;
     [SerializeField] private GameObject roomBase;
-    [SerializeField] private GameObject door;
+    [SerializeField] private GameObject[] door;
+    [SerializeField] private Material[] wallpapers;
 
     private Transform _folowingTransform, _transform;
     private Vector3 temp;
@@ -41,7 +37,6 @@ public class MapGenerator : MonoBehaviour
     private GameObject temporaryGameObj;
     private GameObject generatedRoom;
     private List<RoomAndDist> generatedMap = new List<RoomAndDist>();
-    private List<GameObject> Door;
 
     private int outerLayerMask;
     private int floorLayerMask;
@@ -56,7 +51,7 @@ public class MapGenerator : MonoBehaviour
 
         outerLayerMask = LayerMask.GetMask("outerWall");
         floorLayerMask = LayerMask.GetMask("floor");
-        doorLayerMask = LayerMask.GetMask("Door");
+        doorLayerMask = LayerMask.GetMask("door");
 
         GenerateRooms();
     }
@@ -144,7 +139,6 @@ public class MapGenerator : MonoBehaviour
             Destroy(col[i].gameObject.transform.parent.gameObject);
         }
         Destroy(toDel.gO);
-        Destroy(toDel);
     }
 
     //Создает стену и дверь
@@ -157,20 +151,26 @@ public class MapGenerator : MonoBehaviour
         if (col.Length > 0)
         {
             to_ret = Instantiate(col[0].gameObject.transform.parent.gameObject, centrOfWall, _transform.rotation);
-            if (hor)
+
+            for(int i = 0; i < to_ret.transform.childCount; i++)
             {
-                if (to_ret.transform.GetChild(0).name == "door")
+                if(to_ret.transform.GetChild(i).name == "door")
                 {
-                    temporaryGameObj = Instantiate(door, new Vector3((x + col[0].transform.position.x)/2, 0 , to_ret.transform.GetChild(0).position.z), Quaternion.Euler(Vector3.up *(90 + 90* Mathf.Sign(Random.value - 0.5f))));
+
+                    float dx = (x + col[0].transform.position.x) / 2,
+                        dz = to_ret.transform.GetChild(i).position.z;
+                    Quaternion rot = Quaternion.Euler(Vector3.up * (90 + 90 * Mathf.Sign(Random.value - 0.5f)));
+
+                    if (!hor)
+                    {
+                        dx = to_ret.transform.GetChild(i).position.x;
+                        dz = (z + col[0].transform.position.z) / 2;
+                        rot = Quaternion.Euler(Vector3.up * 90 * Mathf.Sign(Random.value - 0.5f));
+                    }
+
+                    Instantiate(RandomDoor(), new Vector3(dx, 0, dz), rot);
                 }
-            }
-            else
-            {
-                if (to_ret.transform.GetChild(0).name == "door")
-                {
-                    
-                    temporaryGameObj = Instantiate(door, new Vector3(to_ret.transform.GetChild(0).position.x, 0, (z + col[0].transform.position.z) / 2), Quaternion.Euler(Vector3.up * 90 * Mathf.Sign(Random.value - 0.5f)));
-                }
+
             }
         }
         else
@@ -193,10 +193,24 @@ public class MapGenerator : MonoBehaviour
         {
             generatedRoom = new GameObject("room" + cX.ToString()+ ":" + cZ.ToString());
             generatedRoom.transform.position = new Vector3(cX, 0, cZ);
-            GenerateWall(cX - sizeX + wallSize, cZ).transform.parent = generatedRoom.transform;
-            GenerateWall(cX + sizeX - wallSize, cZ).transform.parent = generatedRoom.transform;
-            GenerateWall(cX, cZ - sizeZ + wallSize, false).transform.parent = generatedRoom.transform;
-            GenerateWall(cX, cZ + sizeZ - wallSize, false).transform.parent = generatedRoom.transform;
+            Material roomMat = RandomWallpaper();
+            GameObject[] generatedWalls = new GameObject[4];
+            generatedWalls[0] = GenerateWall(cX - sizeX + wallSize, cZ);
+            generatedWalls[1] = GenerateWall(cX + sizeX - wallSize, cZ);
+            generatedWalls[2] = GenerateWall(cX, cZ - sizeZ + wallSize, false);
+            generatedWalls[3] = GenerateWall(cX, cZ + sizeZ - wallSize, false);
+            for(int i = 0; i < generatedWalls.Length; i++)
+            {
+                generatedWalls[i].transform.parent = generatedRoom.transform;
+                for (int j = 0; j < generatedWalls[i].transform.childCount; j++)
+                {
+                    if (generatedWalls[i].transform.GetChild(j).GetComponent<MeshRenderer>())
+                    {
+                        generatedWalls[i].transform.GetChild(j).GetComponent<MeshRenderer>().material = roomMat;
+                    }
+                }
+            }
+            
             Instantiate(roomBase, new Vector3(cX, 0, cZ), _transform.rotation).transform.parent = generatedRoom.transform;
         }
         else
@@ -214,5 +228,15 @@ public class MapGenerator : MonoBehaviour
     GameObject RandomZWall()
     {
         return outerWZ[Random.Range(0, outerWZ.Length)];
+    }
+
+    GameObject RandomDoor()
+    {
+        return door[Random.Range(0, door.Length)];
+    }
+
+    Material RandomWallpaper()
+    {
+        return wallpapers[Random.Range(0, wallpapers.Length)];
     }
 }
