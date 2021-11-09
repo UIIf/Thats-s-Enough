@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5882131324243653515}
   - component: {fileID: 1339640046851869708}
   - component: {fileID: 142626650235950798}
+  - component: {fileID: 6332322390960255647}
   m_Layer: 8
   m_Name: Pistol
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +34,7 @@ Transform:
   - {fileID: 5830555436565639468}
   - {fileID: 3565654123943247890}
   - {fileID: 652786227252205711}
+  - {fileID: 4957986051162273403}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,6 +80,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.31573746, y: 0.29043445, z: 0.16632608}
   m_Center: {x: -0.068734795, y: 0.022120792, z: -0.005201772}
+--- !u!114 &6332322390960255647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006502409322612663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c79bc49c517ca479260f744382fe44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmoCount: 20
+  shootInterval: 0.49
+  bullet: {fileID: 8490810651273972856, guid: f1e349a2dca4bd041a726a8ed5711f30, type: 3}
+  range: 10
 --- !u!1 &1679942848136319126
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +258,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4587995518875736670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4957986051162273403}
+  m_Layer: 0
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4957986051162273403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587995518875736670}
+  m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.1709, y: 0.0689, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 485263097541401869}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &8795357820315397385
 GameObject:
   m_ObjectHideFlags: 0

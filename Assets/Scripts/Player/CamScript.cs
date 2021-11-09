@@ -13,6 +13,8 @@ public class CamScript : MonoBehaviour
     private float hitDistance;
     public float VectoroTEmpo;
 
+    public Vector3 targetPoint = Vector3.zero;
+
     private Vector3 mousePose = Vector3.zero;
     private Transform _transform;
     // Start is called before the first frame update
@@ -32,7 +34,7 @@ public class CamScript : MonoBehaviour
         LookingLogic();
     }
 
-    private void CamMove(Vector3 targetPoint)
+    private void CamMove()
     {
         if (Mathf.Abs(targetPoint.x - _transform.position.x) < maxShotDist)
         {
@@ -76,7 +78,7 @@ public class CamScript : MonoBehaviour
 
         if (plane.Raycast(ray, out hitDistance))
         {
-            Vector3 targetPoint = ray.GetPoint(hitDistance);
+            targetPoint = ray.GetPoint(hitDistance);
 
             Quaternion targetRotation = Quaternion.LookRotation(targetPoint - _transform.position);
             targetRotation.x = 0;
@@ -86,7 +88,7 @@ public class CamScript : MonoBehaviour
             //{
             //    targetPoint = (targetPoint - transform.position).normalized * maxShotDist;
             //}
-            CamMove(targetPoint);
+            CamMove();
 
         }
 
