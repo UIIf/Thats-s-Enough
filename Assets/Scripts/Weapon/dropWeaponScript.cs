@@ -11,7 +11,7 @@ public class dropWeaponScript : MonoBehaviour
     {
         rb = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
         Vector3 rot = transform.rotation.eulerAngles;
-        rb.AddForce(new Vector3(-Mathf.Cos(rot.y), Mathf.Sin(angle), Mathf.Sin(rot.y)) * speed,ForceMode.Impulse);
+        rb.AddForce(new Vector3(-Mathf.Cos(rot.y), Mathf.Sin(angle), Mathf.Sin(rot.y)) * speed, ForceMode.Impulse);
         BoxCollider[] boxcol  = gameObject.GetComponents<BoxCollider>();
         for(int i = 0; i < boxcol.Length; i++)
         {
@@ -33,7 +33,6 @@ public class dropWeaponScript : MonoBehaviour
             Mathf.Abs(rb.velocity.z) < 0.02f)
         {
             Destroy(rb);
-            Destroy(gameObject.GetComponent<dropWeaponScript>());
             BoxCollider[] boxcol = gameObject.GetComponents<BoxCollider>();
             for (int i = 0; i < boxcol.Length; i++)
             {
@@ -47,6 +46,8 @@ public class dropWeaponScript : MonoBehaviour
                 }
 
             }
+            //переместил дестрой скрипта в конец... логично же
+            Destroy(gameObject.GetComponent<dropWeaponScript>());
         }
     }
 }

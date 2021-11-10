@@ -15,7 +15,6 @@ public class CamScript : MonoBehaviour
 
     public Vector3 targetPoint = Vector3.zero;
 
-    private Vector3 mousePose = Vector3.zero;
     private Transform _transform;
     // Start is called before the first frame update
     void Awake()
@@ -23,13 +22,7 @@ public class CamScript : MonoBehaviour
         _transform = GetComponent<Transform>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        mousePose = cam.WorldToScreenPoint(Input.mousePosition);
-    }
-
-    private void FixedUpdate()
+    private void Update()
     {
         LookingLogic();
     }

@@ -14,8 +14,6 @@ public class tempPlayerMove : MonoBehaviour
     gunScript HoldedGun = null;
     
     private Vector3 moveDir = Vector3.zero;
-    
-
 
     //Чтобы не пересоздавать
     
@@ -29,14 +27,14 @@ public class tempPlayerMove : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if(HoldedGun != null)
             {
                 HoldedGun.Shoot(camScript.targetPoint);
             }
         }
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (HoldedGun != null)
             {
@@ -45,27 +43,27 @@ public class tempPlayerMove : MonoBehaviour
             }
         }
 
+        //КОСТЫЫЫЫЫЛЬ
+        _transform.position = new Vector3(_transform.position.x, 0.85f, _transform.position.z);
+        //зато не летаем теперь С:
+
         moveDir.x = Input.GetAxisRaw("Horizontal");
         moveDir.z = Input.GetAxisRaw("Vertical");
         _controller.Move(moveDir * speed * Time.deltaTime);
-        //transform.LookAt(mousePose);
     }
     void FixedUpdate()
     {
         
-
-
-        
-        
     }
 
+    //это вызывается если у этого объекта (игрока) есть триггер, в который че то попадает, но триггера у игрока нет, это нужно делать в скрипте оружия
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Weapon")
         {
             GameObject newGun = other.gameObject;
             Transform newGunTrans = newGun.transform;
-            if (other.gameObject.GetComponent<Rigidbody>())
+            if (newGun.GetComponent<Rigidbody>())
             {
                 Destroy(newGun.GetComponent<Rigidbody>());
                 Destroy(newGun.GetComponent<dropWeaponScript>());

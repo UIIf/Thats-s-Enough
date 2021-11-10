@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class gunScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] private int maxAmmoCount;
     [SerializeField] private float shootInterval;
     [SerializeField] private GameObject bullet;
@@ -27,7 +26,6 @@ public class gunScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         shootTimer -= Time.deltaTime;
