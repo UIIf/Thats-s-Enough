@@ -5,106 +5,79 @@ using UnityEngine;
 public class tempPlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private float camY;
-    [SerializeField] private Camera cam;
-    [SerializeField] private float maxShotDist;
-
+    [SerializeField] private GameObject hand;
     private CharacterController _controller;
     private Transform _transform;
     private Rigidbody rb;
+    private CamScript camScript;
 
-    public float VectoroTEmpo;
+    gunScript HoldedGun = null;
+    
     private Vector3 moveDir = Vector3.zero;
-    private Vector3 mousePose = Vector3.zero;
-
 
     //Чтобы не пересоздавать
-    private float newCamX, newCamZ;
-    private float hitDistance;
+    
     void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
+        camScript = GetComponent<CamScript>();
     }
 
     void Update()
     {
-        mousePose = cam.WorldToScreenPoint(Input.mousePosition);
-        Debug.Log(mousePose);
-       
-        //transform.LookAt(mousePose);
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if(HoldedGun != null)
+            {
+                HoldedGun.Shoot(camScript.targetPoint);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (HoldedGun != null)
+            {
+                HoldedGun.DropGun();
+                HoldedGun = null;
+            }
+        }    
+
+        moveDir.x = Input.GetAxisRaw("Horizontal");
+        moveDir.z = Input.GetAxisRaw("Vertical");
+        _controller.Move(moveDir * speed * Time.deltaTime);
     }
     void FixedUpdate()
     {
-        moveDir.x = Input.GetAxisRaw("Horizontal");
-        moveDir.z = Input.GetAxisRaw("Vertical");
-        
-        _controller.Move(moveDir * speed * Time.fixedDeltaTime);
-        LookingLogic();
+        //КОСТЫЫЫЫЫЛЬ
+        if (Mathf.Round(_transform.position.y * 100) > 89 || Mathf.Round(_transform.position.y * 100) < 83)
+            _transform.position = new Vector3(_transform.position.x, 0.85f, _transform.position.z);      
+        //зато не летаем теперь С:
     }
 
-    private void CamMove(Vector3 targetPoint)
+    //это вызывается если у этого объекта (игрока) есть триггер, в который че то попадает, но триггера у игрока нет, это нужно делать в скрипте оружия
+    private void OnTriggerEnter(Collider other)
     {
-        if (Mathf.Abs(targetPoint.x - _transform.position.x) < maxShotDist)
+        if (other.tag == "Weapon" && !other.gameObject.GetComponent<dropWeaponScript>())
         {
-            newCamX = (targetPoint.x - _transform.position.x);
-        }
-        else
-        {
-            if (targetPoint.x - _transform.position.x < 0)
-                newCamX = -maxShotDist;
-            else
-                newCamX = maxShotDist;
-
-        }
-        newCamX = newCamX / 2 + _transform.position.x;
-
-        if (Mathf.Abs(targetPoint.z - _transform.position.z) < maxShotDist)
-        {
-            newCamZ = (targetPoint.z - _transform.position.z);
-        }
-        else
-        {
-            if (targetPoint.z - _transform.position.z < 0)
-                newCamZ = -maxShotDist;
-            else
-                newCamZ = maxShotDist;
-        }
-        newCamZ = newCamZ / 2 + _transform.position.z;
-
-
-        cam.transform.position = Vector3.Lerp(cam.transform.position,
-                                              new Vector3(
-                                                  newCamX,
-                                                  camY,
-                                                  newCamZ),
-                                              VectoroTEmpo);
-        //cam.transform.position = new Vector3(Mathf.Min(targetPoint.x - _transform.position.x, maxShotDist) / 2 + _transform.position.x,
-        //                                     camY,
-        //                                     Mathf.Min(targetPoint.z - _transform.position.z, maxShotDist) / 2 + _transform.position.z);
-    }
-    private void LookingLogic()
-    {
-        Plane plane = new Plane(Vector3.up, _transform.position);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        
-        if (plane.Raycast(ray, out hitDistance))
-        {
-            Vector3 targetPoint = ray.GetPoint(hitDistance);
-            
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - _transform.position);
-            targetRotation.x = 0;
-            targetRotation.z = 0;
-            _transform.rotation = targetRotation;
-            //if (targetPoint.sqrMagnitude > maxShotDist * maxShotDist)
-            //{
-            //    targetPoint = (targetPoint - transform.position).normalized * maxShotDist;
-            //}
-            CamMove(targetPoint);
-
+            GameObject newGun = other.gameObject;
+            Transform newGunTrans = newGun.transform;
+            if (newGun.GetComponent<Rigidbody>())
+            {
+                Destroy(newGun.GetComponent<Rigidbody>());
+                Destroy(newGun.GetComponent<dropWeaponScript>());
+            }
+            BoxCollider[] boxcol = newGun.GetComponents<BoxCollider>();
+            for (int i = 0; i < boxcol.Length; i++)
+            {
+                boxcol[i].enabled = false;
+            }
+            //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
+            newGunTrans.parent = hand.transform;
+            newGunTrans.localPosition = Vector3.zero;
+            newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up * 90);
+            HoldedGun = newGun.GetComponent<gunScript>();
         }
 
     }
-    
 }
