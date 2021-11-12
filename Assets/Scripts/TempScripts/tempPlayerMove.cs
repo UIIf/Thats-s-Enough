@@ -41,11 +41,7 @@ public class tempPlayerMove : MonoBehaviour
                 HoldedGun.DropGun();
                 HoldedGun = null;
             }
-        }
-
-        //КОСТЫЫЫЫЫЛЬ
-        _transform.position = new Vector3(_transform.position.x, 0.85f, _transform.position.z);
-        //зато не летаем теперь С:
+        }    
 
         moveDir.x = Input.GetAxisRaw("Horizontal");
         moveDir.z = Input.GetAxisRaw("Vertical");
@@ -53,7 +49,10 @@ public class tempPlayerMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        
+        //КОСТЫЫЫЫЫЛЬ
+        if (Mathf.Round(_transform.position.y * 100) > 89 || Mathf.Round(_transform.position.y * 100) < 83)
+            _transform.position = new Vector3(_transform.position.x, 0.85f, _transform.position.z);      
+        //зато не летаем теперь С:
     }
 
     //это вызывается если у этого объекта (игрока) есть триггер, в который че то попадает, но триггера у игрока нет, это нужно делать в скрипте оружия

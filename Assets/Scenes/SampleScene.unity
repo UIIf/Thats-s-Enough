@@ -539,7 +539,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -754,7 +754,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.75
-  m_Radius: 0.21
+  m_Radius: 0.3
   m_SlopeLimit: 0
   m_StepOffset: 0
   m_SkinWidth: 0.0001
@@ -772,7 +772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfabc42cd1db49b4281030dfc3455071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 5
   hand: {fileID: 6102194984862987821}
 --- !u!114 &1333004723
 MonoBehaviour:
@@ -786,11 +786,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3c425946df5fe4ab9922a1bef30e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camY: 10
+  camY: 8
   cam: {fileID: 963194227}
-  maxShotDist: 10
+  maxShotDist: 12
   percntsCamDist: 0.3
-  VectoroTEmpo: 0.05
+  VectoroTEmpo: 0.01
   targetPoint: {x: 0, y: 0, z: 0}
 --- !u!95 &1333004724
 Animator:
