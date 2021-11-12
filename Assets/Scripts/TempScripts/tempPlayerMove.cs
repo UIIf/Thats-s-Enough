@@ -58,7 +58,7 @@ public class tempPlayerMove : MonoBehaviour
     //это вызывается если у этого объекта (игрока) есть триггер, в который че то попадает, но триггера у игрока нет, это нужно делать в скрипте оружия
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Weapon")
+        if (other.tag == "Weapon" && !other.gameObject.GetComponent<dropWeaponScript>())
         {
             GameObject newGun = other.gameObject;
             Transform newGunTrans = newGun.transform;
@@ -75,9 +75,9 @@ public class tempPlayerMove : MonoBehaviour
             //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
             newGunTrans.parent = hand.transform;
             newGunTrans.localPosition = Vector3.zero;
-            newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up*90);
+            newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up * 90);
             HoldedGun = newGun.GetComponent<gunScript>();
         }
-        
+
     }
 }

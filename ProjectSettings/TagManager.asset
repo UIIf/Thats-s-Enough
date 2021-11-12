@@ -16,8 +16,8 @@ TagManager:
   - door
   - weapon
   - player
-  - bullet
-  - 
+  - playerBullet
+  - innerWall
   - 
   - 
   - 

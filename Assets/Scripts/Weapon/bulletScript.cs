@@ -5,21 +5,15 @@ using UnityEngine;
 public class bulletScript : MonoBehaviour
 {
     [SerializeField] float speed;
-    CharacterController _controller;
-    void Awake()
+   
+    void Update()
     {
-        _controller = GetComponent<CharacterController>();
+        
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        _controller.Move(transform.forward * speed * Time.deltaTime);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        print("Deleted");
         Destroy(gameObject);
     }
 }

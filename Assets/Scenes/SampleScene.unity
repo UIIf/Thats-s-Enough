@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -201,14 +201,20 @@ MonoBehaviour:
   - {fileID: 7444582524072048635, guid: 507ecb49679f40c4c911e37b140afebd, type: 3}
   - {fileID: 5088907533436225457, guid: 8422759a475d64f47a775569a833b2cb, type: 3}
   - {fileID: 1839458779306705135, guid: 7c5804a9214cf76418f19fc91dbffb66, type: 3}
-  roomBase: {fileID: 4370931487580404090, guid: 0c6d2a757cf3b98488e7354f9d5121e7, type: 3}
+  roomInner:
+  - {fileID: 4370931487580404090, guid: 0c6d2a757cf3b98488e7354f9d5121e7, type: 3}
+  - {fileID: 5926048947513637585, guid: 6b38bb785a6ffc647b2bd152c76826e3, type: 3}
   door:
   - {fileID: 1030392840790893662, guid: 695b99af81ccaf446baf4611173c922c, type: 3}
   - {fileID: 1930679721111962232, guid: 02f8b5bc96f3f4c488fa071785ee3e64, type: 3}
+  floor: {fileID: 4875348039934259545, guid: 10ed1107eafe8674b96f37b3c859dec0, type: 3}
   wallpapers:
   - {fileID: 2100000, guid: 37b586e7ede506b40843e39a480add9c, type: 2}
   - {fileID: 2100000, guid: 8904646e6fd94d045a7bdd5c563b2996, type: 2}
   - {fileID: 2100000, guid: be05dd49b07ca35469e7f67664c1e91e, type: 2}
+  floorMaterial:
+  - {fileID: 2100000, guid: 37af0e3dd1273624fa96c16404667491, type: 2}
+  - {fileID: 2100000, guid: a52e6bb727d919247ab3ae7f1ae5ce8e, type: 2}
 --- !u!1001 &523621064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -443,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 485263097541401869, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.65
+      value: 5.331
       objectReference: {fileID: 0}
     - target: {fileID: 485263097541401869, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1185,6 +1191,7 @@ GameObject:
   - component: {fileID: 1333004724}
   - component: {fileID: 1333004722}
   - component: {fileID: 1333004723}
+  - component: {fileID: 919132149083143833}
   m_Layer: 9
   m_Name: player
   m_TagString: Player
@@ -1220,6 +1227,20 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 0.31
   m_Height: 1.54
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &919132149083143833
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149083143830}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.07
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &966371872214904412

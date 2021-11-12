@@ -95,7 +95,7 @@ MonoBehaviour:
   maxAmmoCount: 20
   shootInterval: 0.49
   bullet: {fileID: 8490810651273972856, guid: f1e349a2dca4bd041a726a8ed5711f30, type: 3}
-  range: 10
+  range: 0
 --- !u!1 &1679942848136319126
 GameObject:
   m_ObjectHideFlags: 0

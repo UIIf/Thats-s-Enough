@@ -31,6 +31,9 @@ public class gunScript : MonoBehaviour
         shootTimer -= Time.deltaTime;
         if (shootTimer < 0)
             shootTimer = 0;
+
+        //Debug.DrawLine(barrel.transform.position, barrel.transform.position + new Vector3(-Mathf.Cos(transform.rotation.eulerAngles.y * Mathf.Deg2Rad), Mathf.Sin(15), Mathf.Sin(transform.rotation.eulerAngles.y * Mathf.Deg2Rad)), Color.red);
+
     }
 
     public void Shoot(Vector3 targetPoint)
