@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-
 public class RoomAndDist
 {
     public GameObject gO;
@@ -23,15 +22,21 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int sizeZ;
     [SerializeField] private float wallSize;
     [SerializeField] private int maxRoomCount;
+    [SerializeField] private float MaxDist;
+
 
     [SerializeField] private GameObject[] outerWX;
+    [SerializeField] private GameObject blockWX;
     [SerializeField] private GameObject[] outerWZ;
+    [SerializeField] private GameObject blockWZ;
     [SerializeField] private GameObject[] roomInner;
     [SerializeField] private GameObject[] door;
     [SerializeField] private GameObject floor;
 
     [SerializeField] private Material[] wallpapers;
     [SerializeField] private Material[] floorMaterial;
+
+    [SerializeField] private GameObject link;
 
     private Transform _folowingTransform, _transform;
     private Vector3 temp;
@@ -44,14 +49,12 @@ public class MapGenerator : MonoBehaviour
     private int outerLayerMask;
     private int floorLayerMask;
     private int doorLayerMask;
-
     void Awake()
     {
         wallSize /= 2;
 
         _folowingTransform = following.GetComponent<Transform>();
         _transform = GetComponent<Transform>();
-
         outerLayerMask = LayerMask.GetMask("outerWall");
         floorLayerMask = LayerMask.GetMask("floor");
         doorLayerMask = LayerMask.GetMask("door");
@@ -72,6 +75,7 @@ public class MapGenerator : MonoBehaviour
 
         if (Mathf.Abs(temp.x) > sizeX)
         {
+            
             maximilian = (int)_folowingTransform.position.x / sizeX;
             if (maximilian%2 != 0)
                 maximilian += Mathf.Sign(temp.x);
@@ -136,7 +140,7 @@ public class MapGenerator : MonoBehaviour
     //Удаляет комнату и двери ведущие в нее
     void DeleteRoom(RoomAndDist toDel)
     {
-        Collider[] col = Physics.OverlapBox(toDel.gO.transform.position, new Vector3(sizeX,1,sizeZ), _transform.rotation, doorLayerMask);
+        Collider[] col = Physics.OverlapBox(toDel.gO.transform.position, new Vector3(sizeX,1,sizeZ), _transform.rotation, LayerMask.GetMask("door", "weapon", "enemy"));
         for(int i = 0; i < col.Length; i++)
         {
             Destroy(col[i].gameObject.transform.parent.gameObject);
@@ -149,39 +153,40 @@ public class MapGenerator : MonoBehaviour
     {
         GameObject to_ret;
         Vector3 centrOfWall = new Vector3(x,0,z);
-        Collider[] col = Physics.OverlapBox(centrOfWall, Vector3.one, _transform.rotation, outerLayerMask);
-
-        if (col.Length > 0)
+        if (Mathf.Abs(x) > MaxDist || Mathf.Abs(z) > MaxDist)
         {
-            to_ret = Instantiate(col[0].gameObject.transform.parent.gameObject, centrOfWall, _transform.rotation);
-
-            for(int i = 0; i < to_ret.transform.childCount; i++)
-            {
-                if(to_ret.transform.GetChild(i).name == "door")
-                {
-
-                    float dx = (x + col[0].transform.position.x) / 2,
-                        dz = to_ret.transform.GetChild(i).position.z;
-                    Quaternion rot = Quaternion.Euler(Vector3.up * (90 + 90 * Mathf.Sign(Random.value - 0.5f)));
-
-                    if (!hor)
-                    {
-                        dx = to_ret.transform.GetChild(i).position.x;
-                        dz = (z + col[0].transform.position.z) / 2;
-                        rot = Quaternion.Euler(Vector3.up * 90 * Mathf.Sign(Random.value - 0.5f));
-                    }
-
-                    Instantiate(RandomDoor(), new Vector3(dx, 0, dz), rot);
-                }
-
-            }
+            if (hor)
+                to_ret = Instantiate(blockWX, centrOfWall, _transform.rotation);
+            else
+                to_ret = Instantiate(blockWZ, centrOfWall, _transform.rotation);
         }
         else
         {
-            if(hor)
-                to_ret = Instantiate(RandomXWall(), centrOfWall, _transform.rotation);
+            Collider[] col = Physics.OverlapBox(centrOfWall, Vector3.one, _transform.rotation, outerLayerMask);
+
+            if (col.Length > 0)
+            {
+                to_ret = Instantiate(col[0].gameObject.transform.parent.gameObject, centrOfWall, _transform.rotation);
+
+                for (int i = 0; i < to_ret.transform.childCount; i++)
+                {
+                    if (to_ret.transform.GetChild(i).name == "door")
+                    {
+
+                        to_ret.transform.GetChild(i).Rotate(Vector3.up * (180 * Random.Range(0, 2)));
+
+                        Instantiate(link, to_ret.transform.GetChild(i).transform).transform.parent = Instantiate(RandomDoor(), to_ret.transform.GetChild(i).transform).transform; ;
+                    }
+
+                }
+            }
             else
-                to_ret = Instantiate(RandomZWall(), centrOfWall, _transform.rotation);
+            {
+                if (hor)
+                    to_ret = Instantiate(RandomXWall(), centrOfWall, _transform.rotation);
+                else
+                    to_ret = Instantiate(RandomZWall(), centrOfWall, _transform.rotation);
+            }
         }
         return to_ret;
     }

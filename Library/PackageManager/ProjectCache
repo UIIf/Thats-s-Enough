@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637722951872151467
+      ticks: 637723197296285474
     m_Hash: 1482879244
   m_LockFileStatus:
     m_FilePath: D:/Study/GitRepos/Cursach/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637722951872151467
+      ticks: 637723197296285474
     m_Hash: 3734136228
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
