@@ -53,13 +53,19 @@
     <UnityVersion>2020.3.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\MapGen_Nav\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyMovement.cs" />
     <Compile Include="Assets\Scripts\Player\CamScript.cs" />
     <Compile Include="Assets\Scripts\Weapon\dropWeaponScript.cs" />
     <Compile Include="Assets\Scripts\Weapon\bulletScript.cs" />
+    <Compile Include="Assets\Scripts\Enemy\Navigation\SpeedFix.cs" />
+    <Compile Include="Assets\Scripts\MapGen_Nav\PatrolPointHolder.cs" />
+    <Compile Include="Assets\Scripts\Сreature.cs" />
     <Compile Include="Assets\Scripts\Player\tempPlayerMove.cs" />
     <Compile Include="Assets\Scripts\Weapon\gunScript.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Materials\Shaders\Holographix.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -664,13 +670,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="NavMeshComponents.csproj">
-      <Project>{05F04D2A-09EB-6B50-6767-D237333D0C55}</Project>
-      <Name>NavMeshComponents</Name>
-    </ProjectReference>
     <ProjectReference Include="NavMeshComponentsEditor.csproj">
       <Project>{164776E0-D466-6AD3-0C40-283F9C1ABB0C}</Project>
       <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{05F04D2A-09EB-6B50-6767-D237333D0C55}</Project>
+      <Name>NavMeshComponents</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
