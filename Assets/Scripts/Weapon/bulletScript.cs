@@ -15,15 +15,15 @@ public class bulletScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.GetMask("enemy")) 
-        {
-            print(1);
-            if (other.GetComponent<Ñreature>())
-            {
-                print(2);
-                other.GetComponent<Ñreature>().GetDamage(dmg);
-            }
-        }
-        Destroy(gameObject);
+        //if (other.gameObject.layer == LayerMask.GetMask("enemy")) 
+        //{
+        //    print(1);
+        //    if (other.GetComponent<Ñreature>())
+        //    {
+        //        print(2);
+        //        other.GetComponent<Ñreature>().GetDamage(dmg);
+        //    }
+        //}
+        //Destroy(gameObject);
     }
 }

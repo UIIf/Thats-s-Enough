@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gunScript : MonoBehaviour
+public class gunScript: MonoBehaviour, WeaponInterface
 {
     [SerializeField] private int maxAmmoCount;
     [SerializeField] private float shootInterval;
@@ -59,8 +59,7 @@ public class gunScript : MonoBehaviour
 
     public void DropGun()
     {
-        transform.parent = null;
-        gameObject.AddComponent<dropWeaponScript>();
+       
     }
 
     public int GetMaxAmmo()

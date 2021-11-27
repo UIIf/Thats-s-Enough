@@ -59,10 +59,13 @@
     <Compile Include="Assets\Scripts\Weapon\dropWeaponScript.cs" />
     <Compile Include="Assets\Scripts\Weapon\bulletScript.cs" />
     <Compile Include="Assets\Scripts\Enemy\Navigation\SpeedFix.cs" />
+    <Compile Include="Assets\Scripts\Intrfaces.cs" />
     <Compile Include="Assets\Scripts\MapGen_Nav\PatrolPointHolder.cs" />
-    <Compile Include="Assets\Scripts\Сreature.cs" />
     <Compile Include="Assets\Scripts\Player\tempPlayerMove.cs" />
     <Compile Include="Assets\Scripts\Weapon\gunScript.cs" />
+    <Compile Include="Assets\Scripts\Player\MainPlayerScript.cs" />
+    <Compile Include="Assets\Scripts\Weapon\rayWeapon.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyMainScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\Holographix.shader" />

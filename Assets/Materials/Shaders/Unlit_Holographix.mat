@@ -22,11 +22,11 @@ Material:
     m_Floats:
     - _BasDist: 31.4
     - _BigLen: 0.494
-    - _Condition: 0.241
+    - _Condition: 0
     - _Count: 5.7
     - _Len: 0.297
     - _Scale: 22.58
-    - _SmallLen: 0.672
+    - _SmallLen: 0.629
     - _Speed: 0.0247
     - _SubBasDist: 2
     - _SubLen: 0

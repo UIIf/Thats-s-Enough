@@ -27,21 +27,7 @@ public class tempPlayerMove : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if(HoldedGun != null)
-            {
-                HoldedGun.Shoot(camScript.targetPoint);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            if (HoldedGun != null)
-            {
-                HoldedGun.DropGun();
-                HoldedGun = null;
-            }
-        }    
+        
 
         moveDir.x = Input.GetAxisRaw("Horizontal");
         moveDir.z = Input.GetAxisRaw("Vertical");
@@ -56,28 +42,28 @@ public class tempPlayerMove : MonoBehaviour
     }
 
     //это вызывается если у этого объекта (игрока) есть триггер, в который че то попадает, но триггера у игрока нет, это нужно делать в скрипте оружия
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Weapon" && !other.gameObject.GetComponent<dropWeaponScript>())
-        {
-            GameObject newGun = other.gameObject;
-            Transform newGunTrans = newGun.transform;
-            if (newGun.GetComponent<Rigidbody>())
-            {
-                Destroy(newGun.GetComponent<Rigidbody>());
-                Destroy(newGun.GetComponent<dropWeaponScript>());
-            }
-            BoxCollider[] boxcol = newGun.GetComponents<BoxCollider>();
-            for (int i = 0; i < boxcol.Length; i++)
-            {
-                boxcol[i].enabled = false;
-            }
-            //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
-            newGunTrans.parent = hand.transform;
-            newGunTrans.localPosition = Vector3.zero;
-            newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up * 90);
-            HoldedGun = newGun.GetComponent<gunScript>();
-        }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.tag == "Weapon" && !other.gameObject.GetComponent<dropWeaponScript>())
+    //    {
+    //        GameObject newGun = other.gameObject;
+    //        Transform newGunTrans = newGun.transform;
+    //        if (newGun.GetComponent<Rigidbody>())
+    //        {
+    //            Destroy(newGun.GetComponent<Rigidbody>());
+    //            Destroy(newGun.GetComponent<dropWeaponScript>());
+    //        }
+    //        BoxCollider[] boxcol = newGun.GetComponents<BoxCollider>();
+    //        for (int i = 0; i < boxcol.Length; i++)
+    //        {
+    //            boxcol[i].enabled = false;
+    //        }
+    //        //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
+    //        newGunTrans.parent = hand.transform;
+    //        newGunTrans.localPosition = Vector3.zero;
+    //        newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up * 90);
+    //        HoldedGun = newGun.GetComponent<gunScript>();
+    //    }
 
-    }
+    //}
 }
