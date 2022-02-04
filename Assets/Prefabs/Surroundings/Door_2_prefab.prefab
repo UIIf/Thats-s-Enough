@@ -161,7 +161,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 1.9, z: 1}
+  m_Size: {x: 0.1, y: 2, z: 1.1}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!59 &5946988858603654758
 HingeJoint:

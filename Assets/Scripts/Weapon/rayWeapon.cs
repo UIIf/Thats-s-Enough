@@ -8,12 +8,16 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     [SerializeField] private GameObject barrel;
     [SerializeField] private float shootDelay;
     [SerializeField] private float damage;
+    [SerializeField] private AudioClip shotSound;
+
+    AudioSource _audio;
 
     private int currentAmmo;
     private float beforeNextShot;
 
     void Awake()
     {
+        _audio = GetComponent<AudioSource>();
         currentAmmo = maxAmmo;
         beforeNextShot = 0;
     }
@@ -31,6 +35,8 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     {
         if (beforeNextShot <= 0 && currentAmmo > 0)
         {
+            _audio.PlayOneShot(shotSound);
+
             Vector3 barrelPos = barrel.transform.position;
             targetPoint.y = barrelPos.y;
 

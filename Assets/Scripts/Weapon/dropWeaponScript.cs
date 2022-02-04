@@ -5,12 +5,13 @@ using UnityEngine;
 public class dropWeaponScript : MonoBehaviour
 {
     Rigidbody rb;
-    public float speed = 5f, angle = 15f;
+    public float speed = 18f, angle = 0f;
     private bool delay;
     private float startTime;
     void Awake()
     {
         rb = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
         Vector3 rot = transform.rotation.eulerAngles;
 
         
