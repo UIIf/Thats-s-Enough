@@ -16,10 +16,12 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     [SerializeField] private AudioClip shotSound;
     [SerializeField] private AudioClip emptySound;
 
-    [Header("Tray")]
+    //[Header("Tray")]
+    //[SerializeField] private GameObject rayTray;
+    //[Tooltip("How much units trail travel at 1 second")]
+    //[SerializeField] private float rayTraySpeed;
     [SerializeField] private GameObject rayTray;
-    [Tooltip("How much units trail travel at 1 second")]
-    [SerializeField] private float rayTraySpeed;
+    BulletInterface rayTrayInterface;
 
     AudioSource _audio;
 
@@ -29,6 +31,7 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     void Awake()
     {
         _audio = GetComponent<AudioSource>();
+        rayTrayInterface = rayTray.GetComponent<BulletInterface>();
         currentAmmo = maxAmmo;
         canShoot = true;
     }
@@ -57,7 +60,9 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
             {
                 hit.transform.gameObject.GetComponent<Humanoid>().GetDamage(damage);
             }
-            StartCoroutine(DrawRay(barrel.transform.position, hit.point));
+            //StartCoroutine(DrawRay(barrel.transform.position, hit.point));
+            Instantiate(rayTray, rayTray.transform).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.transform.position, hit.point);
+            
         }
 
         canShoot = false;
@@ -87,61 +92,4 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
         canShoot = true;
         yield break;
     }
-
-    private IEnumerator DrawRay(Vector3 start, Vector3 end)
-    {
-        end.y = start.y;
-
-        float x = end.x - start.x;
-        float z = end.z - start.z;
-
-        //float sin = x / Mathf.Sqrt(x * x + z * z);
-        float Angle = Mathf.Asin(x / Mathf.Sqrt(x * x + z * z)) * Mathf.Rad2Deg;
-        if (z < 0)
-        {
-            Angle = 180 - Angle;
-        }
-        //Debug.Log(Angle);
-        
-        Vector3 prevRot = rayTray.transform.eulerAngles;
-        prevRot.y = Angle - 180;
-        Transform curTr = Instantiate(rayTray, start, Quaternion.Euler(prevRot)).transform;
-
-        float dist = Vector3.Distance(start,end);
-
-        if(dist < 0.1f)
-        {
-            yield break;
-        }
-
-        float trayScalePersent = 1 / dist;
-        Vector3 newScale = Vector3.one;
-
-        if(dist * 0.3f < 1)
-        {
-            trayScalePersent = 0.3f;
-        }
-
-        //newScale.y = trayScalePersent * dist;
-
-        float dt = (1 - trayScalePersent)/dist*rayTraySpeed * Time.fixedDeltaTime;
-        Debug.Log(dt);
-
-
-        for(; trayScalePersent <= 1; trayScalePersent += dt)
-        {
-            newScale.y = trayScalePersent * dist;
-            curTr.localScale = newScale;
-            yield return new WaitForFixedUpdate();
-        }
-
-        newScale.y = dist;
-        curTr.localScale = newScale;
-        yield return new WaitForFixedUpdate();
-
-        Destroy(curTr.gameObject);
-
-        yield break;
-    }
-   
 }

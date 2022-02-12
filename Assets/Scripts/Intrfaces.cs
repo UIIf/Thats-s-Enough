@@ -11,6 +11,11 @@ public interface WeaponInterface
     public int GetAmmo();
 }
 
+public interface BulletInterface
+{
+    public void BulletShootCoroutine(Vector3 start, Vector3 end);
+}
+
 public interface Humanoid
 {
     public void GetDamage(float dmg);
