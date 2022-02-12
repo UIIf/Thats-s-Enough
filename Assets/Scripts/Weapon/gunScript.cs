@@ -22,6 +22,7 @@ public class gunScript: MonoBehaviour, WeaponInterface
             if(gameObject.transform.GetChild(i).name == "Barrel")
             {
                 barrel = gameObject.transform.GetChild(i).gameObject;
+                break;
             }
         }
     }

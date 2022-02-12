@@ -67,23 +67,21 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Weapon" && !other.gameObject.GetComponent<dropWeaponScript>())
-        {
-            GameObject newGun = other.gameObject;
-            if (newGun.GetComponent<Rigidbody>())
-            {
-                Destroy(newGun.GetComponent<Rigidbody>());
-                Destroy(newGun.GetComponent<dropWeaponScript>());
-            }
-            BoxCollider[] boxcol = newGun.GetComponents<BoxCollider>();
-            for (int i = 0; i < boxcol.Length; i++)
-            {
-                boxcol[i].enabled = false;
-            }
-            //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
-            PlaceGun(newGun);
-            holded_guns[0] = newGun.GetComponent<rayWeapon>();
-        }
+        if (other.tag != "Weapon" || other.gameObject.GetComponent<dropWeaponScript>()) return;
 
+        GameObject newGun = other.gameObject;
+        if (newGun.GetComponent<Rigidbody>())
+        {
+            Destroy(newGun.GetComponent<Rigidbody>());
+            Destroy(newGun.GetComponent<dropWeaponScript>());
+        }
+        BoxCollider[] boxcol = newGun.GetComponents<BoxCollider>();
+        for (int i = 0; i < boxcol.Length; i++)
+        {
+            boxcol[i].enabled = false;
+        }
+        //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
+        PlaceGun(newGun);
+        holded_guns[0] = newGun.GetComponent<rayWeapon>();
     }
 }
