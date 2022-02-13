@@ -10,7 +10,6 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     [Header("Gun params")]
     [SerializeField] private float shootDelay;
     [SerializeField] private int maxAmmo;
-    [SerializeField] private float damage;
 
     [Header("Audio")]
     [SerializeField] private AudioClip shotSound;
@@ -56,13 +55,14 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
 
         if (Physics.Raycast(shot, out hit, Mathf.Infinity))//LayerMask.GetMask("innerWall","outerWall","door", "player", "enemy")
         {
-            if (hit.transform.gameObject.GetComponent<Humanoid>() != null)
+            GameObject shotTarget = hit.transform.gameObject;
+            if (hit.transform.gameObject.GetComponent<Humanoid>() == null)
             {
-                hit.transform.gameObject.GetComponent<Humanoid>().GetDamage(damage);
+                shotTarget = null;
+                //hit.transform.gameObject.GetComponent<Humanoid>().GetDamage(damage);
             }
             //StartCoroutine(DrawRay(barrel.transform.position, hit.point));
-            Instantiate(rayTray, rayTray.transform).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.transform.position, hit.point);
-            
+            Instantiate(rayTray, rayTray.transform.position,rayTray.transform.rotation).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.transform.position, hit.point, shotTarget);
         }
 
         canShoot = false;

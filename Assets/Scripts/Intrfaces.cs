@@ -13,7 +13,7 @@ public interface WeaponInterface
 
 public interface BulletInterface
 {
-    public void BulletShootCoroutine(Vector3 start, Vector3 end);
+    public void BulletShootCoroutine(Vector3 start, Vector3 end, GameObject target = null);
 }
 
 public interface Humanoid

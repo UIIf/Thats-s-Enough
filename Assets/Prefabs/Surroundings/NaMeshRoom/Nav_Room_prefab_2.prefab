@@ -1571,8 +1571,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1da4ed639d8254998d1ead3ebcda40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointParent: {fileID: 8897523304683809299}
-  points: []
+  pointParent:
+  - {fileID: 8897523304683809299}
 --- !u!1 &4913762670515244432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,6 +1672,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6097357284676767908}
+  - component: {fileID: 204442095043322826}
   m_Layer: 0
   m_Name: PatrolWay
   m_TagString: Untagged
@@ -1699,6 +1700,27 @@ Transform:
   m_Father: {fileID: 1912227863188968003}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &204442095043322826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897523304683809299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 697992c0a22a97b46add1f754d6117b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points:
+  - {fileID: 6170189374349435741}
+  - {fileID: 5537397057352614465}
+  - {fileID: 1588704372447936022}
+  - {fileID: 8068070447775125910}
+  - {fileID: 8559792880706177539}
+  - {fileID: 3475852671044220654}
+  routeColor: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
+  size: 0.1
 --- !u!1 &8931506171398787063
 GameObject:
   m_ObjectHideFlags: 0

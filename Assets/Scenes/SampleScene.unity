@@ -492,10 +492,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 568193586}
-  - component: {fileID: 568193585}
   - component: {fileID: 568193587}
   - component: {fileID: 568193589}
   - component: {fileID: 568193590}
+  - component: {fileID: 568193585}
   - component: {fileID: 568193588}
   m_Layer: 12
   m_Name: Enemy

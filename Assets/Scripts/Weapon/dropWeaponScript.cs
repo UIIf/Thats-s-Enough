@@ -12,6 +12,7 @@ public class dropWeaponScript : MonoBehaviour
     {
         rb = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         Vector3 rot = transform.rotation.eulerAngles;
 
         

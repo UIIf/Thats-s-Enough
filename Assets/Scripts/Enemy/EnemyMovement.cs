@@ -9,14 +9,15 @@ public class EnemyMovement : MonoBehaviour
     OffMeshLinkData curLink;
 
     Vector3[] curPatrolPoints = null;
+    Vector3 destenationPoint;
 
     bool onTarget = false;
 
-    //Speed
+    [Header("Speed")]
     [SerializeField] float walkSpeed;
     [SerializeField] float runSpeed;
 
-    //Patroling
+    [Header("Patroling")]
     [SerializeField] int chosenPatrolPoint;
     [SerializeField] float distFromPatrolPoint = 0.1f;
     float sqrDistFromPatrolPoint;
@@ -24,7 +25,7 @@ public class EnemyMovement : MonoBehaviour
     //Link variables
     Vector3 linkEnd;
     Vector3 linkDirection;
-    bool linkingBool;
+    bool linkingBool;//agentOnLink
 
     private void Awake()
     {
@@ -88,8 +89,10 @@ public class EnemyMovement : MonoBehaviour
                 curPatrolPoints = col[0].transform.parent.GetChild(4).GetComponent<PatrolPointHolder>().GetPatrolPoints();
                 break;
         }
+
         chosenPatrolPoint = Random.Range(0,curPatrolPoints.Length);
-        agent.SetDestination(curPatrolPoints[chosenPatrolPoint]);
+        destenationPoint = curPatrolPoints[chosenPatrolPoint];
+        agent.SetDestination(destenationPoint);
     }
 
     void FixedUpdate()
@@ -98,28 +101,26 @@ public class EnemyMovement : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             OffMeshLinkTraveler();
+            return;
         }
-        else
+        
+        if(curPatrolPoints == null)
         {
-            if(curPatrolPoints == null)
-            {
-                GetPatrolPoints();
-            }
-            else
-            {
-                if ((transform.position - curPatrolPoints[chosenPatrolPoint]).sqrMagnitude < sqrDistFromPatrolPoint)
-                {
-                    chosenPatrolPoint++;
-                    chosenPatrolPoint %= curPatrolPoints.Length;
-                    agent.SetDestination(curPatrolPoints[chosenPatrolPoint]);
-                }
-                else
-                {
-                    if(agent.isPathStale)
-                        agent.SetDestination(curPatrolPoints[chosenPatrolPoint]);
-                }
-            }
+            GetPatrolPoints();
+            return;
         }
+
+        if ((transform.position - destenationPoint).sqrMagnitude < sqrDistFromPatrolPoint)
+        {
+            chosenPatrolPoint++;
+            chosenPatrolPoint %= curPatrolPoints.Length;
+            destenationPoint = curPatrolPoints[chosenPatrolPoint];
+            agent.SetDestination(destenationPoint);
+            return;
+        }
+
+        if(agent.isPathStale)
+            agent.SetDestination(destenationPoint);
         
     }
 

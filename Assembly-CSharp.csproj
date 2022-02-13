@@ -61,11 +61,13 @@
     <Compile Include="Assets\Scripts\Enemy\Navigation\SpeedFix.cs" />
     <Compile Include="Assets\Scripts\Intrfaces.cs" />
     <Compile Include="Assets\Scripts\MapGen_Nav\PatrolPointHolder.cs" />
+    <Compile Include="Assets\Scripts\Debug\CircleOnGismo.cs" />
     <Compile Include="Assets\Scripts\Player\tempPlayerMove.cs" />
     <Compile Include="Assets\Scripts\Weapon\rayWeapon.cs" />
     <Compile Include="Assets\Scripts\Player\MainPlayerScript.cs" />
     <Compile Include="Assets\Scripts\Weapon\gunScript.cs" />
     <Compile Include="Assets\Scripts\Weapon\rayTrayScript.cs" />
+    <Compile Include="Assets\Scripts\MapGen_Nav\routPoints.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\Holographix.shader" />

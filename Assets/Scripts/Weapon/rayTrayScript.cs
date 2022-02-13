@@ -8,18 +8,19 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
     //[SerializeField] private GameObject rayTray;
     [Tooltip("How much units trail travel at 1 second")]
     [SerializeField] private float rayTraySpeed;
+    [SerializeField] private float damage;
     //[SerializeField] GameObject self;
- 
+
     //private void Awake()
     //{
     //    self = gameObject;
     //}
-    public void BulletShootCoroutine(Vector3 start, Vector3 end)
+    public void BulletShootCoroutine(Vector3 start, Vector3 end, GameObject target = null)
     {
-        StartCoroutine(DrawRay(start, end));
+        StartCoroutine(DrawRay(start, end, target));
     }
 
-    private IEnumerator DrawRay(Vector3 start, Vector3 end)
+    private IEnumerator DrawRay(Vector3 start, Vector3 end, GameObject target = null)
     {
         end.y = start.y;
 
@@ -53,8 +54,12 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
         Vector3 newScale = Vector3.one;
 
         float dt = trayScalePersent / dist * rayTraySpeed * Time.fixedDeltaTime;
-        Debug.Log(dt);
 
+
+        if(target != null)
+        {
+            target.GetComponent<Humanoid>().GetDamage(damage);
+        }
 
         for (; trayScalePersent > 0.1; trayScalePersent -= dt)
         {
