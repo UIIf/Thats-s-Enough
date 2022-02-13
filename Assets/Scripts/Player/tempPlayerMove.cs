@@ -10,6 +10,7 @@ public class tempPlayerMove : MonoBehaviour
     private Transform _transform;
     private Rigidbody rb;
     private CamScript camScript;
+    private Animator animator;
 
     gunScript HoldedGun = null;
     
@@ -23,15 +24,19 @@ public class tempPlayerMove : MonoBehaviour
         _transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         camScript = GetComponent<CamScript>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        
-
         moveDir.x = Input.GetAxisRaw("Horizontal");
         moveDir.z = Input.GetAxisRaw("Vertical");
         _controller.Move(moveDir * speed * Time.deltaTime);
+        if (moveDir == Vector3.zero)
+            animator.SetBool("isWalking", false);
+        else
+            animator.SetBool("isWalking", true);
+
     }
     void FixedUpdate()
     {

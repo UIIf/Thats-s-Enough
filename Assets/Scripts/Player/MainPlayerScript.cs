@@ -7,7 +7,6 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     [SerializeField] private float _HP;
     [SerializeField] private GameObject hand;
 
-
     private CamScript camScript;
 
     rayWeapon[] holded_guns = { null, null };
@@ -18,7 +17,6 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
