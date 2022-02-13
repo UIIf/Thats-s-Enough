@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006502409322612663}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -37,7 +37,7 @@ Transform:
   - {fileID: 4957986051162273403}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 90, z: 90}
 --- !u!65 &5882131324243653515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -79,11 +79,9 @@ MonoBehaviour:
   barrel: {fileID: 4587995518875736670}
   shootDelay: 0.2
   maxAmmo: 20
-  damage: 50
   shotSound: {fileID: 8300000, guid: 0efcb98d58a57d0418689d9b14053154, type: 3}
   emptySound: {fileID: 8300000, guid: 7cbdac65443a82e4aafee081fbfd72fb, type: 3}
   rayTray: {fileID: 1941773262079783044, guid: 5b037c92db580ae4db4769d2c676e3a5, type: 3}
-  rayTraySpeed: 60
 --- !u!82 &-5170793570399164394
 AudioSource:
   m_ObjectHideFlags: 0
