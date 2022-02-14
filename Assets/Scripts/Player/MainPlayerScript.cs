@@ -60,7 +60,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
         Transform newGunTrans = gun.transform;
         newGunTrans.parent = hand.transform;
         newGunTrans.localPosition = Vector3.zero;
-        newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up * 90);
+        newGunTrans.localRotation = Quaternion.Euler(180, 90, 90);
     }
 
     private void OnTriggerEnter(Collider other)
