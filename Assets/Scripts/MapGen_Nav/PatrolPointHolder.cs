@@ -25,7 +25,6 @@ public class PatrolPointHolder : MonoBehaviour
     public Vector3[] GetPatrolPoints()
     {
         Vector3[] temp = pointParent[(int)Mathf.Floor(Random.Range(0, pointParent.Length - 0.5f))].GetComponent<routPoints>().GetPoints();
-        Debug.Log(temp);
         return temp;
     }
 

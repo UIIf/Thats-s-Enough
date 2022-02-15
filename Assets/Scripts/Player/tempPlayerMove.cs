@@ -11,12 +11,8 @@ public class tempPlayerMove : MonoBehaviour
     private Rigidbody rb;
     private CamScript camScript;
     private Animator animator;
-
-    gunScript HoldedGun = null;
     
     private Vector3 moveDir = Vector3.zero;
-
-    //Чтобы не пересоздавать
     
     void Awake()
     {
@@ -46,29 +42,4 @@ public class tempPlayerMove : MonoBehaviour
         //зато не летаем теперь С:
     }
 
-    //это вызывается если у этого объекта (игрока) есть триггер, в который че то попадает, но триггера у игрока нет, это нужно делать в скрипте оружия
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.tag == "Weapon" && !other.gameObject.GetComponent<dropWeaponScript>())
-    //    {
-    //        GameObject newGun = other.gameObject;
-    //        Transform newGunTrans = newGun.transform;
-    //        if (newGun.GetComponent<Rigidbody>())
-    //        {
-    //            Destroy(newGun.GetComponent<Rigidbody>());
-    //            Destroy(newGun.GetComponent<dropWeaponScript>());
-    //        }
-    //        BoxCollider[] boxcol = newGun.GetComponents<BoxCollider>();
-    //        for (int i = 0; i < boxcol.Length; i++)
-    //        {
-    //            boxcol[i].enabled = false;
-    //        }
-    //        //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
-    //        newGunTrans.parent = hand.transform;
-    //        newGunTrans.localPosition = Vector3.zero;
-    //        newGunTrans.rotation = Quaternion.Euler(Quaternion.LookRotation(camScript.targetPoint - newGunTrans.position).eulerAngles + Vector3.up * 90);
-    //        HoldedGun = newGun.GetComponent<gunScript>();
-    //    }
-
-    //}
 }

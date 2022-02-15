@@ -17,6 +17,7 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
     //}
     public void BulletShootCoroutine(Vector3 start, Vector3 end, GameObject target = null)
     {
+        Debug.Log(Time.time);
         StartCoroutine(DrawRay(start, end, target));
     }
 
@@ -47,6 +48,7 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
 
         if (dist < 0.1f)
         {
+            Destroy(curTr.gameObject);
             yield break;
         }
 
@@ -55,7 +57,6 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
 
         float dt = trayScalePersent / dist * rayTraySpeed * Time.fixedDeltaTime;
 
-
         if(target != null)
         {
             target.GetComponent<Humanoid>().GetDamage(damage);
@@ -63,11 +64,13 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
 
         for (; trayScalePersent > 0.1; trayScalePersent -= dt)
         {
+            Debug.Log(trayScalePersent);
             newScale.y = trayScalePersent * dist;
             curTr.localScale = newScale;
             yield return new WaitForFixedUpdate();
         }
 
+        Debug.Log("Destroyed");
         Destroy(curTr.gameObject);
 
         yield break;

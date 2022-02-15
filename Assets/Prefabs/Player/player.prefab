@@ -562,11 +562,11 @@ GameObject:
   - component: {fileID: 4526759069163774621}
   - component: {fileID: 3862285071431546918}
   - component: {fileID: 3862285071431546921}
+  - component: {fileID: 3862285071431546920}
   - component: {fileID: 4132332065988366080}
   - component: {fileID: 4132332065988366085}
   - component: {fileID: 4132332065988366083}
   - component: {fileID: 4132332065988366082}
-  - component: {fileID: 3862285071431546920}
   - component: {fileID: 3862285071431546923}
   m_Layer: 9
   m_Name: player
@@ -623,6 +623,20 @@ CapsuleCollider:
   m_Enabled: 1
   m_Radius: 0.31
   m_Height: 1.54
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &3862285071431546920
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862285071431546919}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.07
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!143 &4132332065988366080
@@ -692,22 +706,9 @@ MonoBehaviour:
   cam: {fileID: 0}
   maxShotDist: 12
   percntsCamDist: 0.3
+  minimalDist: 2
   VectoroTEmpo: 0.01
   targetPoint: {x: 0, y: 0, z: 0}
---- !u!136 &3862285071431546920
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3862285071431546919}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2.07
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3862285071431546923
 MonoBehaviour:
   m_ObjectHideFlags: 0

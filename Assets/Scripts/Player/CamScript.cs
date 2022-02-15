@@ -8,6 +8,7 @@ public class CamScript : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private float maxShotDist;
     [SerializeField] private float percntsCamDist;
+    [SerializeField] private float minimalDist = 1f;
 
     private float newCamX, newCamZ;
     private float hitDistance;
@@ -16,7 +17,7 @@ public class CamScript : MonoBehaviour
     public Vector3 targetPoint = Vector3.zero;
 
     private Transform _transform;
-    // Start is called before the first frame update
+
     void Awake()
     {
         _transform = GetComponent<Transform>();
@@ -69,21 +70,25 @@ public class CamScript : MonoBehaviour
         Plane plane = new Plane(Vector3.up, _transform.position);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (plane.Raycast(ray, out hitDistance))
+        if (!plane.Raycast(ray, out hitDistance))
         {
-            targetPoint = ray.GetPoint(hitDistance);
-
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - _transform.position);
-            targetRotation.x = 0;
-            targetRotation.z = 0;
-            _transform.rotation = targetRotation;
-            //if (targetPoint.sqrMagnitude > maxShotDist * maxShotDist)
-            //{
-            //    targetPoint = (targetPoint - transform.position).normalized * maxShotDist;
-            //}
-            CamMove();
-
+            return;
         }
 
+        targetPoint = ray.GetPoint(hitDistance);
+
+        if (Vector3.Distance(targetPoint, transform.position) < minimalDist)
+        {
+            targetPoint = (targetPoint - transform.position).normalized * minimalDist + transform.position;
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetPoint - _transform.position);
+        targetRotation.x = 0;
+        targetRotation.z = 0;
+        _transform.rotation = targetRotation;
+
+        CamMove();
+
     }
+
 }
