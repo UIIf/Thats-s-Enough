@@ -8,12 +8,14 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     [SerializeField] private GameObject hand;
 
     private CamScript camScript;
+    private Animator animator;
 
     rayWeapon[] holded_guns = { null, null };
 
     void Awake()
     {
         camScript = GetComponent<CamScript>();
+        animator = GetComponent<Animator>();
 
     }
 
@@ -30,10 +32,13 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
         {
             if (holded_guns[0] != null)
             {
+                animator.SetBool("nowOneHanded", false);
                 holded_guns[0].DropGun();
                 holded_guns[0] = null;
             }
         }
+
+
     }
 
     private void Death()
@@ -78,7 +83,8 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
         {
             boxcol[i].enabled = false;
         }
-        //other.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * 90 +_transform.rotation.eulerAngles);
+
+        animator.SetBool("nowOneHanded", true);
         PlaceGun(newGun);
         holded_guns[0] = newGun.GetComponent<rayWeapon>();
     }

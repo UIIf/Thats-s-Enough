@@ -1525,9 +1525,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 896358368750095224, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.64278764
+      objectReference: {fileID: 0}
+    - target: {fileID: 896358368750095224, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7660445
+      objectReference: {fileID: 0}
+    - target: {fileID: 896358368750095224, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862285071431546918, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_Drag
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862285071431546918, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 3862285071431546918, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3862285071431546919, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
       propertyPath: m_Name
       value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132332065988366080, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4132332065988366082, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
       propertyPath: cam
@@ -1543,11 +1571,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4132332065988366082, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
       propertyPath: VectoroTEmpo
-      value: 0.05
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4132332065988366082, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
       propertyPath: percntsCamDist
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132332065988366083, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: acceleration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4132332065988366085, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4526759069163774621, guid: a8aa8f037a5bc18498e77afb9c10932c, type: 3}
       propertyPath: m_RootOrder

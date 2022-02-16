@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class rayTrayScript : MonoBehaviour, BulletInterface
 {
-    //[Header("Tray")]
-    //[SerializeField] private GameObject rayTray;
     [Tooltip("How much units trail travel at 1 second")]
     [SerializeField] private float rayTraySpeed;
     [SerializeField] private float damage;
-    //[SerializeField] GameObject self;
 
-    //private void Awake()
-    //{
-    //    self = gameObject;
-    //}
     public void BulletShootCoroutine(Vector3 start, Vector3 end, GameObject target = null)
     {
-        Debug.Log(Time.time);
         StartCoroutine(DrawRay(start, end, target));
     }
 
@@ -34,13 +26,12 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
         {
             Angle = 180 - Angle;
         }
-        //Debug.Log(Angle);
 
         Vector3 prevRot = transform.eulerAngles;
 
         prevRot.y = Angle - 180;
 
-        Transform curTr = transform;//Instantiate(self, end, Quaternion.Euler(prevRot)).transform;
+        Transform curTr = transform;
         curTr.position = end;
         curTr.localEulerAngles = prevRot;
 
@@ -64,13 +55,11 @@ public class rayTrayScript : MonoBehaviour, BulletInterface
 
         for (; trayScalePersent > 0.1; trayScalePersent -= dt)
         {
-            Debug.Log(trayScalePersent);
             newScale.y = trayScalePersent * dist;
             curTr.localScale = newScale;
             yield return new WaitForFixedUpdate();
         }
 
-        Debug.Log("Destroyed");
         Destroy(curTr.gameObject);
 
         yield break;

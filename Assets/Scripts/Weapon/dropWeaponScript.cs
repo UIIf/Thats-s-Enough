@@ -11,7 +11,7 @@ public class dropWeaponScript : MonoBehaviour
     void Awake()
     {
         rb = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        //rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         Vector3 rot = transform.rotation.eulerAngles;
 

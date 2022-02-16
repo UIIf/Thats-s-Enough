@@ -23,7 +23,7 @@ public class CamScript : MonoBehaviour
         _transform = GetComponent<Transform>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         LookingLogic();
     }
@@ -82,10 +82,9 @@ public class CamScript : MonoBehaviour
             targetPoint = (targetPoint - transform.position).normalized * minimalDist + transform.position;
         }
 
-        Quaternion targetRotation = Quaternion.LookRotation(targetPoint - _transform.position);
-        targetRotation.x = 0;
-        targetRotation.z = 0;
-        _transform.rotation = targetRotation;
+        Vector3 targetRotation = _transform.eulerAngles;
+        targetRotation.y = Quaternion.LookRotation(targetPoint - _transform.position).eulerAngles.y; 
+        _transform.eulerAngles = targetRotation;
 
         CamMove();
 

@@ -15,10 +15,6 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     [SerializeField] private AudioClip shotSound;
     [SerializeField] private AudioClip emptySound;
 
-    //[Header("Tray")]
-    //[SerializeField] private GameObject rayTray;
-    //[Tooltip("How much units trail travel at 1 second")]
-    //[SerializeField] private float rayTraySpeed;
     [SerializeField] private GameObject rayTray;
     BulletInterface rayTrayInterface;
 
@@ -59,9 +55,7 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
             if (hit.transform.gameObject.GetComponent<Humanoid>() == null)
             {
                 shotTarget = null;
-                //hit.transform.gameObject.GetComponent<Humanoid>().GetDamage(damage);
             }
-            //StartCoroutine(DrawRay(barrel.transform.position, hit.point));
             Instantiate(rayTray, rayTray.transform.position,rayTray.transform.rotation).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.transform.position, hit.point, shotTarget);
         }
 
