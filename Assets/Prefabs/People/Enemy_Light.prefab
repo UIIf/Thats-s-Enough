@@ -912,7 +912,7 @@ MonoBehaviour:
   walkSpeed: 2
   runSpeed: 0
   chosenPatrolPoint: 0
-  distFromPatrolPoint: 1
+  distFromPatrolPoint: 2
 --- !u!114 &6618296098472652223
 MonoBehaviour:
   m_ObjectHideFlags: 0
