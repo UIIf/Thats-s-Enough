@@ -95,6 +95,20 @@ public class EnemyMovement : MonoBehaviour
         agent.SetDestination(destenationPoint);
     }
 
+    //private void RotateToTarget() // поворачивает в стороно цели со скоростью rotationSpeed
+    //{
+    //    Vector3 lookVector = Target.position - agentTransform.position;
+    //    lookVector.y = 0;
+    //    if (lookVector == Vector3.zero) return;
+    //    agentTransform.rotation = Quaternion.RotateTowards
+    //        (
+    //            agentTransform.rotation,
+    //            Quaternion.LookRotation(lookVector, Vector3.up),
+    //            rotationSpeed * Time.deltaTime
+    //        );
+
+    //}
+
     void FixedUpdate()
     {
         if (onTarget)
