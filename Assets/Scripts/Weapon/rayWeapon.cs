@@ -8,13 +8,13 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     
     [SerializeField] private Transform barrel;
 
-    [Header("Enemy enteract")]
+    [Header("Enemy interact")]
     [SerializeField] private bool isPlayerGun = true;
-    [SerializeField] private float notifyRadius = 4f;
+    [SerializeField] private float notifyRadius;
     [SerializeField] private bool showNotifyRadius = true;
     [SerializeField] private Color notifyColor = Color.green;
 
-    [Header("Gun params")]
+    [Header("Gun parameters")]
     [SerializeField] private float shootDelay;
     [SerializeField] private int maxAmmo;
 

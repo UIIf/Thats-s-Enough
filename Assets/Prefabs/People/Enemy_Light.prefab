@@ -885,8 +885,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 5
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 1
@@ -909,10 +909,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b2c37bd9ca954999e0fa9d8875e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  closeRange: 0
+  destenationPoint: {x: 0, y: 0, z: 0}
   walkSpeed: 2
-  runSpeed: 0
   chosenPatrolPoint: 0
   distFromPatrolPoint: 2
+  state: 0
+  dis: 0
+  startWaiting: 0
 --- !u!114 &6618296098472652223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,8 +930,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d335bb1fab27a848914e2759dbe209b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showCoroutine: 
+  curManager: {fileID: 0}
   _HP: 100
   deathParticl: {fileID: 5008549359479772449, guid: 26bb030deebc8e644a15c19e809dd712, type: 3}
+  viewDistance: 6
+  closeRange: 1
+  viewAngle: 90
+  shootingRange: 4
+  lookingAroundTime: 0
+  startToWatch: 0
+  isLookingAround: 0
 --- !u!1 &6724284412043637133
 GameObject:
   m_ObjectHideFlags: 0
