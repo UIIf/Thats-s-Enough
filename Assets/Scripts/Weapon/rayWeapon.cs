@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class rayWeapon : MonoBehaviour, WeaponInterface
 {
     
-    [SerializeField] private GameObject barrel;
+    [SerializeField] private Transform barrel;
+
+    [Header("Enemy enteract")]
+    [SerializeField] private bool isPlayerGun = true;
+    [SerializeField] private float notifyRadius = 4f;
+    [SerializeField] private bool showNotifyRadius = true;
+    [SerializeField] private Color notifyColor = Color.green;
 
     [Header("Gun params")]
     [SerializeField] private float shootDelay;
@@ -31,6 +38,14 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
         canShoot = true;
     }
 
+    private void OnDrawGizmos()
+    {
+        if (showNotifyRadius)
+        {
+            Handles.color = notifyColor;
+            Handles.DrawWireArc(barrel.position, Vector3.up, Vector3.forward, 360, notifyRadius);
+        }
+    }
     public void Shoot(Vector3 targetPoint)
     {
         if (!canShoot) return;
@@ -41,9 +56,11 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
             return;
         }
 
+        if (isPlayerGun) EmulateShootSound();
+
         _audio.PlayOneShot(shotSound);
 
-        Vector3 barrelPos = barrel.transform.position;
+        Vector3 barrelPos = barrel.position;
         targetPoint.y = barrelPos.y;
 
         RaycastHit hit;
@@ -56,13 +73,27 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
             {
                 shotTarget = null;
             }
-            Instantiate(rayTray, rayTray.transform.position,rayTray.transform.rotation).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.transform.position, hit.point, shotTarget);
+            Instantiate(rayTray, rayTray.transform.position,rayTray.transform.rotation).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.position, hit.point, shotTarget);
         }
 
         canShoot = false;
         StartCoroutine(ShootDelayCorutine());
 
         currentAmmo--;
+    }
+
+    private void EmulateShootSound()
+    {
+        Collider[] col = Physics.OverlapSphere(barrel.position, notifyRadius,LayerMask.GetMask("enemy"));
+        for(int i = 0; i < col.Length; i++)
+        {
+            EnemyMainScript mainScript = col[i].GetComponent<EnemyMainScript>();
+
+            if(mainScript != null)
+            {
+                mainScript.ReactOnShot(barrel.position);
+            }
+        }
     }
 
     public void DropGun()

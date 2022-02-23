@@ -2,30 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+public enum botMoveState
+{
+    patrol,
+    onTarget,
+    wait
+}
 public class EnemyMovement : MonoBehaviour
 {
     Rigidbody rb;
     NavMeshAgent agent;
     OffMeshLinkData curLink;
 
-    Vector3[] curPatrolPoints = null;
-    Vector3 destenationPoint;
+    //FromMainScript
+    public Transform target = null;
+    public float closeRange;
 
-    bool onTarget = false;
+    Vector3[] curPatrolPoints = null;
+    [SerializeField]  Vector3 destenationPoint;
 
     [Header("Speed")]
     [SerializeField] float walkSpeed;
-    [SerializeField] float runSpeed;
 
     [Header("Patroling")]
     [SerializeField] int chosenPatrolPoint;
     [SerializeField] float distFromPatrolPoint = 0.1f;
+    
     float sqrDistFromPatrolPoint;
 
     //Link variables
     Vector3 linkEnd;
     Vector3 linkDirection;
-    bool linkingBool;//agentOnLink
+    bool linkingBool;
+
+    [SerializeField] private botMoveState state = botMoveState.patrol;
+
+    //Debug
+    [Header("debug")]
+    [SerializeField] float dis;
+
+    public bool startWaiting;
 
     private void Awake()
     {
@@ -40,38 +57,35 @@ public class EnemyMovement : MonoBehaviour
     {
         if(agent.isOnOffMeshLink && !linkingBool)
         {
-            //prevDist = Mathf.Infinity;
             rb.isKinematic = false;
             
             curLink = agent.currentOffMeshLinkData;
 
-            Vector3 linkDirection = curLink.endPos - curLink.startPos;
-
             linkEnd = curLink.endPos;
+            linkEnd.y = transform.position.y;
 
-            linkDirection = new Vector3(    0,
-                                            ((Mathf.Abs(linkDirection.z) > 0.01) ? Mathf.Sign(linkDirection.z) * 90 : 0 ) +
-                                                ((Mathf.Abs(linkDirection.x) > 0.01) ? Mathf.Sign(linkDirection.x) * 180 : 0) - 90,
-                                            0);
+
+            //Vector3 linkDirection = curLink.endPos - curLink.startPos;
+
+            //linkDirection = new Vector3(    0,
+            //                                ((Mathf.Abs(linkDirection.z) > 0.1f) ? Mathf.Sign(linkDirection.z) * 90 : 0 ) +
+            //                                    ((Mathf.Abs(linkDirection.x) > 0.1f) ? Mathf.Sign(linkDirection.x) * 180 : 0) - 90,
+            //                                0);
 
             linkingBool = true;
-            
+            transform.localEulerAngles = linkDirection;
         }
 
         if (linkingBool)
         {
-            rb.velocity = (linkEnd - transform.position).normalized * agent.speed;
-            transform.rotation = Quaternion.Euler( Vector3.Lerp(transform.rotation.eulerAngles * Mathf.Rad2Deg, linkDirection, 0.05f) * Mathf.Deg2Rad);
-
-            //For april fools
-            //transform.rotation = Quaternion.Euler(Vector3.Lerp(transform.rotation.eulerAngles * Mathf.Rad2Deg, linkDirection, 0.2f));
+            rb.MovePosition(transform.position + (linkEnd - transform.position) * walkSpeed * Time.deltaTime);
+            //TODO: add rotation
 
             float curDist = (transform.position - linkEnd).sqrMagnitude;
-            print(curDist);
-            if (curDist < 0.01)
+            if (curDist < 0.06f)
             {
                 linkingBool = false;
-                rb.isKinematic = true;
+                rb.isKinematic = false;
                 agent.CompleteOffMeshLink();
             }
         }
@@ -90,9 +104,7 @@ public class EnemyMovement : MonoBehaviour
                 break;
         }
 
-        chosenPatrolPoint = Random.Range(0,curPatrolPoints.Length);
-        destenationPoint = curPatrolPoints[chosenPatrolPoint];
-        agent.SetDestination(destenationPoint);
+        
     }
 
     //private void RotateToTarget() // поворачивает в стороно цели со скоростью rotationSpeed
@@ -109,33 +121,94 @@ public class EnemyMovement : MonoBehaviour
 
     //}
 
-    void FixedUpdate()
+    public void changeState(botMoveState newState)
     {
-        if (onTarget)
+        curPatrolPoints = null;
+        startWaiting = false;
+        state = newState;
+    }
+
+    public void checkPoint(Vector3 point)
+    {
+        destenationPoint = point;
+        destenationPoint.y = transform.position.y;
+        agent.destination = destenationPoint;
+    }
+    void Patroling()
+    {
+        if ((transform.position - destenationPoint).sqrMagnitude < sqrDistFromPatrolPoint || curPatrolPoints == null)
         {
-            rb.velocity = Vector3.zero;
-            OffMeshLinkTraveler();
+            NextDestenationPoint();
+            agent.destination = destenationPoint;
             return;
         }
-        
-        if(curPatrolPoints == null)
+    }
+
+    void MoveOnTarget()
+    {
+        dis = Vector3.Distance(transform.position, target.position);
+        transform.LookAt(target);
+        if (Vector3.Distance(transform.position, target.position) < closeRange)
         {
-            GetPatrolPoints();
+            agent.isStopped = true;
             return;
+        }
+        else
+        {
+            agent.isStopped = false;
         }
 
+        destenationPoint = target.position + Vector3.up * (transform.position.y - target.position.y);
+        agent.destination = destenationPoint;
+    }
+
+    void MoveOnWait()
+    {
         if ((transform.position - destenationPoint).sqrMagnitude < sqrDistFromPatrolPoint)
+        {
+            startWaiting = true;
+            return;
+        }
+    }
+
+    void NextDestenationPoint()
+    {
+        if (curPatrolPoints == null)
+        {
+            GetPatrolPoints();
+            chosenPatrolPoint = Random.Range(0, curPatrolPoints.Length);
+            destenationPoint = curPatrolPoints[chosenPatrolPoint];
+            return;
+        }
+        else
         {
             chosenPatrolPoint++;
             chosenPatrolPoint %= curPatrolPoints.Length;
             destenationPoint = curPatrolPoints[chosenPatrolPoint];
-            agent.SetDestination(destenationPoint);
+        }
+        destenationPoint.y = transform.position.y;
+    }
+
+    void FixedUpdate()
+    {
+        if (agent.isOnOffMeshLink)
+        {
+            OffMeshLinkTraveler();
             return;
         }
-
-        if(agent.isPathStale)
-            agent.SetDestination(destenationPoint);
+        switch (state){
+            case botMoveState.wait:
+                MoveOnWait();
+                break;
+            case botMoveState.patrol:
+                Patroling();
+                break;
+            case botMoveState.onTarget:
+                MoveOnTarget();
+                break;
+        }
         
+
     }
 
 }

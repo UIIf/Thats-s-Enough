@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Weapon\gunScript.cs" />
     <Compile Include="Assets\Scripts\Weapon\rayTrayScript.cs" />
     <Compile Include="Assets\Scripts\MapGen_Nav\routPoints.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Materials\Shaders\Holographix.shader" />

@@ -76,7 +76,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a186fb478e590b4a88a33a9a962a9f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrel: {fileID: 4587995518875736670}
+  barrel: {fileID: 4957986051162273403}
+  isPlayerGun: 1
+  notifyRadius: 16
+  showNotifyRadius: 1
+  notifyColor: {r: 0, g: 1, b: 0, a: 1}
   shootDelay: 0.2
   maxAmmo: 20
   shotSound: {fileID: 8300000, guid: 0efcb98d58a57d0418689d9b14053154, type: 3}

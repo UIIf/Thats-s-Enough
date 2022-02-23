@@ -5,44 +5,117 @@ using UnityEditor;
 
 public class EnemyMainScript : MonoBehaviour, Humanoid
 {
+    //Debug
+    [Header("debug")]
+    [SerializeField] string showCoroutine;
+    //
+   
     [Header("Main parametrs")]
+    [SerializeField] EnemyManager curManager;
     [SerializeField] private float _HP;
     [SerializeField] GameObject deathParticl;
+    EnemyMovement eMovement;
 
     [Header("Visibility")]
     [SerializeField]public float viewDistance = 6f;
     [SerializeField] float closeRange = 1f;
     [Range(0, 360)]
     [SerializeField] float viewAngle = 90f;
-    [Tooltip("In seconds")]
-    [SerializeField] float updatePeriod = 0.3f;
+    [SerializeField] float shootingRange = 4f;
+    [SerializeField] float lookingAroundTime;
+    public uint startToWatch;
+    [SerializeField] bool isLookingAround = false;
 
-    [Header("Target")]
-    [SerializeField] private Transform target;
+
+    //[Header("Target")]
+    private Transform target;
 
     private Color viewColor = Color.yellow;
 
     private void Awake()
     {
-        StartCoroutine("LookingCoroutine");
-    }
+        startToWatch = curManager.maxFixedUpdateCount + 1;
+        target = curManager.trarget;
+        //Debug 
+        startToWatch = 20;
+        //
 
-    private void FixedUpdate()
-    {
-        
+
+        eMovement = GetComponent<EnemyMovement>();
+        eMovement.target = target;
+        eMovement.closeRange = closeRange;
+
+        StartCoroutine("LookingCoroutine");
     }
 
     IEnumerator LookingCoroutine()
     {
-        while (true)
-        {
-            if (SeeTarget())
-            {
-                viewColor = Color.red;
-            }
+        showCoroutine = "look";
+        eMovement.changeState(botMoveState.patrol);
+        while (startToWatch != curManager.fUCounter)
+            yield return new WaitForFixedUpdate();
 
-            yield return new WaitForSecondsRealtime(updatePeriod);
+        //Start watch
+        while (!SeeTarget())
+        {
+            viewColor = Color.red;
+            for(int i = 0; i < curManager.maxFixedUpdateCount; i++)
+            {
+                yield return new WaitForFixedUpdate();
+            }
         }
+        
+        StartCoroutine("RunForTarget");
+    }
+
+    IEnumerator RunForTarget()
+    {
+        showCoroutine = "Run";
+        eMovement.changeState(botMoveState.onTarget);
+        while (SeeTarget())
+        {
+            yield return new WaitForFixedUpdate();
+        }
+        StartCoroutine("LookAround");
+        yield break;
+    }
+
+    IEnumerator LookAround()
+    {
+        showCoroutine = "Wait";
+        eMovement.changeState(botMoveState.wait);
+        isLookingAround = true;
+        lookingAroundTime = curManager.lookArT;
+        
+
+        while (isLookingAround && !SeeTarget())
+        {
+            if (eMovement.startWaiting)
+            {
+                StartCoroutine("LookAroundTimer");
+            }
+            yield return new WaitForFixedUpdate();
+        }
+
+
+        if (isLookingAround)
+        {
+            StopCoroutine("LookAroundTimer");
+            isLookingAround = false;
+            StartCoroutine("RunForTarget");
+        }
+        else
+        {
+            StartCoroutine("LookingCoroutine");
+        }
+
+        yield break;
+    }
+
+    IEnumerator LookAroundTimer()
+    {
+        yield return new WaitForSecondsRealtime(lookingAroundTime);
+        isLookingAround = false;
     }
 
     private bool SeeTarget()
@@ -80,7 +153,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         Handles.color = viewColor;
         Vector3 center = transform.position;
 
-        Handles.DrawWireArc(center, transform.up, -transform.forward, (360 - viewAngle) /2,closeRange);
+        Handles.DrawWireArc(center, transform.up, -transform.forward, (360 - viewAngle) / 2, closeRange);
         Handles.DrawWireArc(center, transform.up, -transform.forward, (viewAngle - 360) / 2, closeRange);
 
         Vector3 leftFirst = center + Quaternion.Euler(new Vector3(0, -viewAngle / 2f, 0)) * (transform.forward * closeRange);
@@ -94,6 +167,9 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
         Handles.DrawWireArc(center, transform.up, transform.forward, viewAngle / 2f, viewDistance);
         Handles.DrawWireArc(center, transform.up, transform.forward, -viewAngle / 2f, viewDistance);
+
+        Handles.color = Color.white;
+        Handles.DrawWireArc(center, transform.up, transform.forward, 360, shootingRange);
     }
 
     private void Death()
@@ -120,5 +196,14 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     ~EnemyMainScript()
     {
         StopAllCoroutines();
+    }
+
+    //PUBLIC
+
+    public void ReactOnShot(Vector3 point)
+    {
+        StopAllCoroutines();
+        StartCoroutine("LookAround");
+        eMovement.checkPoint(point);
     }
 }
