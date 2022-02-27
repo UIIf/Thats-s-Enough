@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainPlayerScript :MonoBehaviour, Humanoid
 {
@@ -38,7 +39,8 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             }
         }
 
-
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(0);
     }
 
     private void Death()

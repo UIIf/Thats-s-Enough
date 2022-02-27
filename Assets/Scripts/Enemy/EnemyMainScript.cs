@@ -148,7 +148,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         return hit.transform == target;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Handles.color = viewColor;
         Vector3 center = transform.position;
@@ -170,7 +170,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
         Handles.color = Color.white;
         Handles.DrawWireArc(center, transform.up, transform.forward, 360, shootingRange);
-    }
+    }*/
 
     private void Death()
     {
