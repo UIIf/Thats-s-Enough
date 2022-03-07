@@ -914,7 +914,7 @@ MonoBehaviour:
   destenationPoint: {x: 0, y: 0, z: 0}
   walkSpeed: 2
   chosenPatrolPoint: 0
-  distFromPatrolPoint: 3
+  distFromPatrolPoint: 5
   state: 0
   dis: 0
   startWaiting: 0
@@ -941,6 +941,7 @@ MonoBehaviour:
   lookingAroundTime: 0
   startToWatch: 0
   isLookingAround: 0
+  drawOnGizmos: 0
 --- !u!1 &6724284412043637133
 GameObject:
   m_ObjectHideFlags: 0

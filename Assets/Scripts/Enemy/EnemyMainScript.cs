@@ -11,7 +11,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     //
    
     [Header("Main parametrs")]
-    [SerializeField] EnemyManager curManager;
+    [SerializeField] public EnemyManager curManager;
     [SerializeField] private float _HP;
     [SerializeField] GameObject deathParticl;
     EnemyMovement eMovement;
@@ -25,6 +25,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     [SerializeField] float lookingAroundTime;
     public uint startToWatch;
     [SerializeField] bool isLookingAround = false;
+    [SerializeField] bool drawOnGizmos = false;
 
 
     //[Header("Target")]
@@ -36,9 +37,9 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     {
         startToWatch = curManager.maxFixedUpdateCount + 1;
         target = curManager.trarget;
-        //Debug 
-        startToWatch = 20;
-        //
+        // //Debug 
+        // startToWatch = 20;
+        // //
 
 
         eMovement = GetComponent<EnemyMovement>();
@@ -148,29 +149,32 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         return hit.transform == target;
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
-        Handles.color = viewColor;
-        Vector3 center = transform.position;
+        if (drawOnGizmos)
+        {
+            Handles.color = viewColor;
+            Vector3 center = transform.position;
 
-        Handles.DrawWireArc(center, transform.up, -transform.forward, (360 - viewAngle) / 2, closeRange);
-        Handles.DrawWireArc(center, transform.up, -transform.forward, (viewAngle - 360) / 2, closeRange);
+            Handles.DrawWireArc(center, transform.up, -transform.forward, (360 - viewAngle) / 2, closeRange);
+            Handles.DrawWireArc(center, transform.up, -transform.forward, (viewAngle - 360) / 2, closeRange);
 
-        Vector3 leftFirst = center + Quaternion.Euler(new Vector3(0, -viewAngle / 2f, 0)) * (transform.forward * closeRange);
-        Vector3 leftSecond = center + Quaternion.Euler(new Vector3(0, -viewAngle / 2f, 0)) * (transform.forward * viewDistance);
+            Vector3 leftFirst = center + Quaternion.Euler(new Vector3(0, -viewAngle / 2f, 0)) * (transform.forward * closeRange);
+            Vector3 leftSecond = center + Quaternion.Euler(new Vector3(0, -viewAngle / 2f, 0)) * (transform.forward * viewDistance);
 
-        Vector3 rightFirst = center + Quaternion.Euler(new Vector3(0, viewAngle / 2f, 0)) * (transform.forward * closeRange);
-        Vector3 rightSecond = center + Quaternion.Euler(new Vector3(0, viewAngle / 2f, 0)) * (transform.forward * viewDistance);
+            Vector3 rightFirst = center + Quaternion.Euler(new Vector3(0, viewAngle / 2f, 0)) * (transform.forward * closeRange);
+            Vector3 rightSecond = center + Quaternion.Euler(new Vector3(0, viewAngle / 2f, 0)) * (transform.forward * viewDistance);
 
-        Handles.DrawLine(leftFirst, leftSecond);
-        Handles.DrawLine(rightFirst, rightSecond);
+            Handles.DrawLine(leftFirst, leftSecond);
+            Handles.DrawLine(rightFirst, rightSecond);
 
-        Handles.DrawWireArc(center, transform.up, transform.forward, viewAngle / 2f, viewDistance);
-        Handles.DrawWireArc(center, transform.up, transform.forward, -viewAngle / 2f, viewDistance);
+            Handles.DrawWireArc(center, transform.up, transform.forward, viewAngle / 2f, viewDistance);
+            Handles.DrawWireArc(center, transform.up, transform.forward, -viewAngle / 2f, viewDistance);
 
-        Handles.color = Color.white;
-        Handles.DrawWireArc(center, transform.up, transform.forward, 360, shootingRange);
-    }*/
+            Handles.color = Color.white;
+            Handles.DrawWireArc(center, transform.up, transform.forward, 360, shootingRange);
+        }
+    }
 
     private void Death()
     {

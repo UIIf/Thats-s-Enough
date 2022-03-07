@@ -100,14 +100,14 @@ public class EnemyMovement : MonoBehaviour
                 Destroy(gameObject);
                 break;
             default:
-                curPatrolPoints = col[0].transform.parent.GetChild(4).GetComponent<PatrolPointHolder>().GetPatrolPoints();
+                curPatrolPoints = col[0].transform.parent.GetChild(4).GetComponent<EnemyPointHolder>().GetPatrolPoints();
                 break;
         }
 
         
     }
 
-    //private void RotateToTarget() // поворачивает в стороно цели со скоростью rotationSpeed
+    //private void RotateToTarget() // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ rotationSpeed
     //{
     //    Vector3 lookVector = Target.position - agentTransform.position;
     //    lookVector.y = 0;
