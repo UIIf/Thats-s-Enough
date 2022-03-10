@@ -34,6 +34,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             if (holded_guns[0] != null)
             {
                 animator.SetBool("nowOneHanded", false);
+                animator.SetBool("nowTwoHanded", false);
                 holded_guns[0].DropGun();
                 holded_guns[0] = null;
             }
@@ -86,7 +87,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             boxcol[i].enabled = false;
         }
 
-        animator.SetBool("nowOneHanded", true);
+        animator.SetBool("nowTwoHanded", true);
         PlaceGun(newGun);
         holded_guns[0] = newGun.GetComponent<rayWeapon>();
     }
