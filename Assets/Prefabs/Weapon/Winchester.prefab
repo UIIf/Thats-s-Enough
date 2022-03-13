@@ -444,7 +444,7 @@ MonoBehaviour:
   type: 1
   shotSound: {fileID: 8300000, guid: 548790b88f7d9214ab56e113e5f4d80a, type: 3}
   emptySound: {fileID: 8300000, guid: 7cbdac65443a82e4aafee081fbfd72fb, type: 3}
-  rayTray: {fileID: 1941773262079783044, guid: 5b037c92db580ae4db4769d2c676e3a5, type: 3}
+  rayTray: {fileID: 1941773262079783044, guid: 2a39b7295f055eb42944a907a8619748, type: 3}
 --- !u!82 &2785045355789019784
 AudioSource:
   m_ObjectHideFlags: 0

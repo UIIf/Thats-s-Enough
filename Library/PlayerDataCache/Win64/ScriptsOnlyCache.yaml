@@ -17,6 +17,8 @@ ScriptsOnlyBuild:
     NavMeshComponents.dll:
     - UnityEngine.AI.NavMeshLink
     - UnityEngine.AI.NavMeshSurface
+    NavMeshComponentsEditor.dll:
+    - UnityEditor.AI.NavMeshAssetManager
     Unity.Animation.Rigging.dll:
     - UnityEngine.Animations.Rigging.BoneRenderer
     - UnityEngine.Animations.Rigging.Rig
@@ -26,8 +28,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -38,6 +42,8 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
+    - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -87,50 +93,56 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1510}
+      Script: {instanceID: 1552}
     - Class: 114
-      Script: {instanceID: 1550}
+      Script: {instanceID: 1558}
     - Class: 114
       Script: {instanceID: 1592}
     - Class: 114
-      Script: {instanceID: 1636}
+      Script: {instanceID: 1634}
     - Class: 114
-      Script: {instanceID: 1718}
+      Script: {instanceID: 1678}
     - Class: 114
-      Script: {instanceID: 2072}
+      Script: {instanceID: 1760}
     - Class: 114
-      Script: {instanceID: 2094}
+      Script: {instanceID: 2114}
     - Class: 114
-      Script: {instanceID: 2530}
+      Script: {instanceID: 2136}
     - Class: 114
-      Script: {instanceID: 2546}
+      Script: {instanceID: 2208}
     - Class: 114
-      Script: {instanceID: 2670}
+      Script: {instanceID: 2572}
     - Class: 114
-      Script: {instanceID: 2782}
+      Script: {instanceID: 2588}
     - Class: 114
-      Script: {instanceID: 2874}
+      Script: {instanceID: 2712}
     - Class: 114
-      Script: {instanceID: 3104}
+      Script: {instanceID: 2824}
     - Class: 114
-      Script: {instanceID: 3178}
+      Script: {instanceID: 2916}
     - Class: 114
-      Script: {instanceID: 3758}
+      Script: {instanceID: 3146}
     - Class: 114
-      Script: {instanceID: 3896}
+      Script: {instanceID: 3220}
     - Class: 114
-      Script: {instanceID: 4020}
+      Script: {instanceID: 3800}
     - Class: 114
-      Script: {instanceID: 4546}
+      Script: {instanceID: 3938}
     - Class: 114
-      Script: {instanceID: 4576}
+      Script: {instanceID: 4062}
     - Class: 114
-      Script: {instanceID: 4722}
+      Script: {instanceID: 4588}
     - Class: 114
-      Script: {instanceID: 5144}
+      Script: {instanceID: 4618}
     - Class: 114
-      Script: {instanceID: 5272}
+      Script: {instanceID: 4764}
+    - Class: 114
+      Script: {instanceID: 5186}
+    - Class: 114
+      Script: {instanceID: 5314}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
@@ -144,13 +156,11 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 196
       Script: {instanceID: 0}
-    - Class: 198
-      Script: {instanceID: 0}
-    - Class: 199
-      Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
     - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -167,7 +177,7 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: 1d1929bc937c4edb5b399cf8425067c8
+      Hash: 5287214a58497613bc52a5f8e5c8fb2b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyMainScript
@@ -209,7 +219,7 @@ ScriptsOnlyBuild:
     className: SignalAsset
   - hash:
       serializedVersion: 2
-      Hash: 60db7d6f337d0ba230a45f00cd25f1ef
+      Hash: 207a69974a512c7101a14f52f083467c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyMovement
@@ -383,7 +393,7 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: e42908000be5d9d46d3d6f2f1824d29d
+      Hash: 2e03a42edd1882de833e0a8924c11cca
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: EnemyManager
@@ -701,13 +711,13 @@ ScriptsOnlyBuild:
     className: TMP_Settings
   - hash:
       serializedVersion: 2
-      Hash: 297506a62d8d34776ebe650d997ac56a
+      Hash: 53ce5d42d3f945f4b539f16a8481ec27
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: rayWeapon
   - hash:
       serializedVersion: 2
-      Hash: fcfe31ef1f6aa26ed251bf7a0b150a53
+      Hash: f9bf00811f6403a30b7b37c9d7086897
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainPlayerScript
@@ -719,7 +729,7 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
-      Hash: 4b7d6af3add36019c6c9d1d1856e1f32
+      Hash: 816a35b9632d31d2ca6730d2eb3dccff
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: gunScript
@@ -798,4 +808,4 @@ ScriptsOnlyBuild:
   platform: 19
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/cursach_3/Cursachs.exe
+  playerPath: C:/cursach_4/Cursachs.exe

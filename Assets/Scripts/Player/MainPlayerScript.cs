@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainPlayerScript :MonoBehaviour, Humanoid
 {
     [SerializeField] private float _HP;
     [SerializeField] private GameObject hand;
     [SerializeField] float dropGunForce;
+    [SerializeField] GameObject HealthBar;
+    [SerializeField] Text AmmoUI;
 
     private CamScript camScript;
     private Animator animator;
+
+    
 
     WeaponInterface[] holded_guns = { null, null };
 
@@ -27,12 +32,14 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             if (holded_guns[0] != null)
             {
                 holded_guns[0].Shoot(camScript.targetPoint);
+                AmmoUI.text = holded_guns[0].GetAmmo().ToString();
             }
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (holded_guns[0] != null)
             {
+                AmmoUI.text = "";
                 animator.SetBool("nowOneHanded", false);
                 animator.SetBool("nowTwoHanded", false);
                 holded_guns[0].DropGun(dropGunForce);
@@ -52,6 +59,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     public void GetDamage(float dmg)
     {
         _HP -= dmg;
+        HealthBar.transform.localScale = new Vector2((_HP/100) > 0? _HP/100 : 0, 1);
         if (_HP <= 0)
         {
             Death();
@@ -66,8 +74,9 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     private void PlaceGun(GameObject gun)
     {
         holded_guns[0] = gun.GetComponent<rayWeapon>();
+        AmmoUI.text = holded_guns[0].GetAmmo().ToString();
 
-        switch(holded_guns[0].GetGunType()){
+        switch (holded_guns[0].GetGunType()){
             case gunType.oneHanded:
                 animator.SetBool("nowOneHanded", true);
                 break;
@@ -88,6 +97,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
         if (other.tag != "Weapon" || other.gameObject.GetComponent<dropWeaponScript>()) return;
         if(holded_guns[0] != null) return;
         GameObject newGun = other.gameObject;
+        if (newGun.GetComponent<WeaponInterface>().GetAmmo() <= 0) return;
         if (newGun.GetComponent<Rigidbody>())
         {
             Destroy(newGun.GetComponent<Rigidbody>());

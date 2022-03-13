@@ -44,9 +44,6 @@ public class dropWeaponScript : MonoBehaviour
             Mathf.Abs(rb.velocity.z) < 0.02f)
         {
             Destroy(rb);
-            if(GetComponent<WeaponInterface>().GetAmmo() <= 0){
-                Destroy(gameObject);
-            }
             BoxCollider[] boxcol = gameObject.GetComponents<BoxCollider>();
             for (int i = 0; i < boxcol.Length; i++)
             {

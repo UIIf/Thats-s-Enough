@@ -125,5 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd948e00f0266144299d623ada07fd41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayTraySpeed: 60
-  damage: 50
+  rayTraySpeed: 40
+  damage: 25
