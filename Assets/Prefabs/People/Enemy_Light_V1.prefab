@@ -852,7 +852,7 @@ Animator:
   m_GameObject: {fileID: 6618296098472652219}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d90a589ff175b114082e64175d4153db, type: 3}
-  m_Controller: {fileID: 9100000, guid: b2107b79db0873342ba43eca892a3f7f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 485dcaadd5bfe044a830343ab32b9665, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -935,14 +935,16 @@ MonoBehaviour:
   _HP: 100
   deathParticl: {fileID: 5008549359479772449, guid: 26bb030deebc8e644a15c19e809dd712, type: 3}
   hand: {fileID: 450446265100483996}
+  shootDelay: 1
   viewDistance: 6
-  closeRange: 1
+  closeRange: 2
   viewAngle: 90
   shootingRange: 4
   lookingAroundTime: 0
   startToWatch: 0
   isLookingAround: 0
   drawOnGizmos: 0
+  DebugCount: 0
 --- !u!1 &6724284412043637133
 GameObject:
   m_ObjectHideFlags: 0

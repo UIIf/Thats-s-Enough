@@ -39,7 +39,7 @@ public class gunScript: MonoBehaviour, WeaponInterface
 
     }
 
-    public void Shoot(Vector3 targetPoint)
+    public bool Shoot(Vector3 targetPoint)
     {
         if(shootTimer <= 0 && ammoCount > 0)
         {
@@ -58,9 +58,10 @@ public class gunScript: MonoBehaviour, WeaponInterface
         {
             //Play sound of error
         }
+        return true;
     }
 
-    public void DropGun()
+    public void DropGun(float force = 5f)
     {
        
     }

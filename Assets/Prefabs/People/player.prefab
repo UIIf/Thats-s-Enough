@@ -751,6 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _HP: 100
   hand: {fileID: 4559713169538783524}
+  dropGunForce: 0
 --- !u!114 &5063100386152059552
 MonoBehaviour:
   m_ObjectHideFlags: 0

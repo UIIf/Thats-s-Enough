@@ -48,14 +48,14 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
             Handles.DrawWireArc(barrel.position, Vector3.up, Vector3.forward, 360, notifyRadius);
         }
     }*/
-    public void Shoot(Vector3 targetPoint)
+    public bool Shoot(Vector3 targetPoint)
     {
-        if (!canShoot) return;
-
+        if (!canShoot) return false;
+        canShoot = false;
         if(currentAmmo <= 0)
         {
             _audio.PlayOneShot(emptySound);
-            return;
+            return true;
         }
 
         if (isPlayerGun) EmulateShootSound();
@@ -76,12 +76,11 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
                 shotTarget = null;
             }
             Instantiate(rayTray, rayTray.transform.position,rayTray.transform.rotation).GetComponent<BulletInterface>().BulletShootCoroutine(barrel.position, hit.point, shotTarget);
-        }
-
-        canShoot = false;
+        }        
+        currentAmmo--;
         StartCoroutine(ShootDelayCorutine());
 
-        currentAmmo--;
+        return true;
     }
 
     private void EmulateShootSound()
@@ -98,10 +97,10 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
         }
     }
 
-    public void DropGun()
+    public void DropGun(float force = 5f)
     {
         transform.parent = null;
-        gameObject.AddComponent<dropWeaponScript>();
+        gameObject.AddComponent<dropWeaponScript>().speed = force;
     }
 
     public int GetMaxAmmo()
@@ -115,6 +114,7 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
 
     private IEnumerator ShootDelayCorutine()
     {
+        
         yield return new WaitForSecondsRealtime(shootDelay);
         canShoot = true;
         yield break;

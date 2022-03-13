@@ -7,6 +7,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
 {
     [SerializeField] private float _HP;
     [SerializeField] private GameObject hand;
+    [SerializeField] float dropGunForce;
 
     private CamScript camScript;
     private Animator animator;
@@ -34,7 +35,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             {
                 animator.SetBool("nowOneHanded", false);
                 animator.SetBool("nowTwoHanded", false);
-                holded_guns[0].DropGun();
+                holded_guns[0].DropGun(dropGunForce);
                 holded_guns[0] = null;
             }
         }

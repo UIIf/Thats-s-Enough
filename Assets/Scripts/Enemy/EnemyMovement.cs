@@ -15,9 +15,11 @@ public class EnemyMovement : MonoBehaviour
     NavMeshAgent agent;
     OffMeshLinkData curLink;
 
+    public Animator anim;
+
     //FromMainScript
     public Transform target = null;
-    public float closeRange;
+    public float shootingRange;
 
     Vector3[] curPatrolPoints = null;
     [SerializeField]  Vector3 destenationPoint;
@@ -35,12 +37,13 @@ public class EnemyMovement : MonoBehaviour
     Vector3 linkEnd;
     Vector3 linkDirection;
     bool linkingBool;
-
+    
     [SerializeField] private botMoveState state = botMoveState.patrol;
 
     //Debug
     [Header("debug")]
-    [SerializeField] float dis;
+
+
 
     public bool startWaiting;
 
@@ -123,6 +126,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void changeState(botMoveState newState)
     {
+        agent.isStopped = false;
         curPatrolPoints = null;
         startWaiting = false;
         state = newState;
@@ -146,15 +150,16 @@ public class EnemyMovement : MonoBehaviour
 
     void MoveOnTarget()
     {
-        dis = Vector3.Distance(transform.position, target.position);
         transform.LookAt(target);
-        if (Vector3.Distance(transform.position, target.position) < closeRange)
+        if (Vector3.Distance(transform.position, target.position) < shootingRange)
         {
+            anim.SetBool("isWalking", false);
             agent.isStopped = true;
             return;
         }
         else
         {
+            anim.SetBool("isWalking", true);
             agent.isStopped = false;
         }
 

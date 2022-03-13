@@ -8,8 +8,8 @@ public enum gunType{
 }
 public interface WeaponInterface
 {
-    public void Shoot(Vector3 targetPoint);
-    public void DropGun();
+    public bool Shoot(Vector3 targetPoint);
+    public void DropGun(float force = 5f);
 
     public int GetMaxAmmo();
     public int GetAmmo();

@@ -186,7 +186,6 @@ public class MapGenerator : MonoBehaviour
         }
 
         if(index == 1 && generatedGunRoom != null){
-            print("JOPA");
             index = 0;
         }
 

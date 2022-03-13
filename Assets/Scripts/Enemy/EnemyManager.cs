@@ -70,7 +70,7 @@ public class EnemyManager : MonoBehaviour
         tempEnemy.GetComponent<EnemyMainScript>().curManager = transform.GetComponent<EnemyManager>();
         tempEnemy.GetComponent<EnemyMainScript>().startToWatch = GetIndexFixedCounts();
         tempEnemy = Instantiate(tempEnemy, vec, Quaternion.Euler(new Vector3(0, Random.Range(0,360) ,0)));
-        tempEnemy.GetComponent<EnemyMainScript>().GetGun(Instantiate(GetRandomGun(), transform));
+        tempEnemy.GetComponent<EnemyMainScript>().GetGun(Instantiate(GetRandomGun(), tempEnemy.transform));
     }
 
     private GameObject GetRandomEnemy(){

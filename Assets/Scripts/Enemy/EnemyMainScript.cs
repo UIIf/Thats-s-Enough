@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+enum botState{
+    patrol,
+    chase,
+    lookAround
+}
+
 public class EnemyMainScript : MonoBehaviour, Humanoid
-{
-    //Debug
-    [Header("debug")]
-    [SerializeField] string showCoroutine;
-    //
-   
+{   
     [Header("Main parametrs")]
     [SerializeField] public EnemyManager curManager;
     [SerializeField] private float _HP;
-    [SerializeField] GameObject deathParticl;
     [SerializeField] GameObject hand;
+
+    [SerializeField] float shootDelay = 1f;
+    [SerializeField ]private bool canShoot;
+    [SerializeField]private botState state;
     EnemyMovement eMovement;
 
     [Header("Visibility")]
@@ -22,38 +26,40 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     [SerializeField] float closeRange = 1f;
     [Range(0, 360)]
     [SerializeField] float viewAngle = 90f;
-    [SerializeField] float shootingRange = 4f;
+    public float shootingRange = 4f;
     [SerializeField] float lookingAroundTime;
     public int startToWatch;
     [SerializeField] bool isLookingAround = false;
     [SerializeField] bool drawOnGizmos = false;
     private WeaponInterface gun;
-
+    private Animator animator;
 
     //[Header("Target")]
     private Transform target;
 
     private Color viewColor = Color.yellow;
 
+    public int  DebugCount = 0;
+
     private void Awake()
     {
-        // startToWatch = curManager.maxFixedUpdateCount + 1;
         target = curManager.trarget;
-        // //Debug 
-        // startToWatch = 20;
-        // //
 
+        canShoot = true;
 
+        animator = GetComponent<Animator>();
         eMovement = GetComponent<EnemyMovement>();
         eMovement.target = target;
-        eMovement.closeRange = closeRange;
-
+        eMovement.anim = animator;
+        eMovement.shootingRange = shootingRange;
+        
+        animator.SetBool("isWalking", true);
         StartCoroutine("LookingCoroutine");
     }
 
     IEnumerator LookingCoroutine()
     {
-        showCoroutine = "look";
+        state = botState.patrol;
         eMovement.changeState(botMoveState.patrol);
         while (startToWatch != curManager.fUCounter)
             yield return new WaitForFixedUpdate();
@@ -73,19 +79,32 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     IEnumerator RunForTarget()
     {
-        showCoroutine = "Run";
+        state = botState.chase;
         eMovement.changeState(botMoveState.onTarget);
         while (SeeTarget())
         {
+            if(canShoot){
+                if(Shoot()){
+                    StartCoroutine("ShootDelay");
+                }
+            }
+            
             yield return new WaitForFixedUpdate();
         }
         StartCoroutine("LookAround");
         yield break;
     }
 
+    IEnumerator ShootDelay(){
+        canShoot = false;
+        yield return new WaitForSecondsRealtime(shootDelay);
+        canShoot = true;
+        yield break;
+    }
+
     IEnumerator LookAround()
     {
-        showCoroutine = "Wait";
+        state = botState.lookAround;
         eMovement.changeState(botMoveState.wait);
         isLookingAround = true;
         lookingAroundTime = curManager.lookArT;
@@ -121,6 +140,9 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         isLookingAround = false;
     }
 
+    private bool Shoot(){
+        return gun.Shoot(target.position);
+    }
     private bool SeeTarget()
     {
         float distanceToTarget = Vector3.Distance(target.position, transform.position);
@@ -180,7 +202,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     private void Death()
     {
-        Instantiate(deathParticl,transform.position,deathParticl.transform.rotation);
+        gun.DropGun(1f);
         Destroy(gameObject);
     }
 
@@ -209,23 +231,25 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     public void ReactOnShot(Vector3 point)
     {
+        canShoot = true;
         StopAllCoroutines();
         StartCoroutine("LookAround");
         eMovement.checkPoint(point);
+        
     }
 
     public void GetGun(GameObject newgun){
-        gun= newgun.GetComponent<rayWeapon>();
+        gun = newgun.GetComponent<rayWeapon>();
 
-        // switch(gun.GetGunType()){
-        //     case gunType.oneHanded:
-        //         animator.SetBool("nowOneHanded", true);
-        //         break;
+        switch(gun.GetGunType()){
+            case gunType.oneHanded:
+                animator.SetBool("nowOneHanded", true);
+                break;
 
-        //     case gunType.twoHanded:
-        //         animator.SetBool("nowTwoHanded", true);
-        //         break;
-        // }
+            case gunType.twoHanded:
+                animator.SetBool("nowTwoHanded", true);
+                break;
+        }
 
         Transform newGunTrans = newgun.transform;
         newGunTrans.parent = hand.transform;

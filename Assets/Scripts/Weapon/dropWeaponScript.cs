@@ -8,14 +8,13 @@ public class dropWeaponScript : MonoBehaviour
     public float speed = 18f, angle = 0f;
     private bool delay;
     private float startTime;
-    void Awake()
+
+    void Start()
     {
         rb = gameObject.AddComponent(typeof(Rigidbody)) as Rigidbody;
         //rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         Vector3 rot = transform.rotation.eulerAngles;
-
-        
 
         BoxCollider[] boxcol = gameObject.GetComponents<BoxCollider>();
         for (int i = 0; i < boxcol.Length; i++)
@@ -45,6 +44,9 @@ public class dropWeaponScript : MonoBehaviour
             Mathf.Abs(rb.velocity.z) < 0.02f)
         {
             Destroy(rb);
+            if(GetComponent<WeaponInterface>().GetAmmo() <= 0){
+                Destroy(gameObject);
+            }
             BoxCollider[] boxcol = gameObject.GetComponents<BoxCollider>();
             for (int i = 0; i < boxcol.Length; i++)
             {
@@ -58,7 +60,7 @@ public class dropWeaponScript : MonoBehaviour
                 }
 
             }
-            //переместил дестрой скрипта в конец... логично же
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ... пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
             Destroy(gameObject.GetComponent<dropWeaponScript>());
         }
 
