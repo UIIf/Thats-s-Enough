@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     [Header("Enemys")]
     [SerializeField] GameObject[] enemy;
+    [SerializeField] GameObject[] guns;
     [Header("Enemy view")]
 
     [SerializeField] Transform enemyTarget;
@@ -15,14 +16,14 @@ public class EnemyManager : MonoBehaviour
     }
 
     [Tooltip("Count of fixedUpdate before next view")]
-    [SerializeField] uint fixedUpdateCount = 100;
-    public uint maxFixedUpdateCount
+    [SerializeField] int fixedUpdateCount = 100;
+    public int maxFixedUpdateCount
     {
         get => fixedUpdateCount;
     }
 
-    uint fixedUpdateCounter = 0;
-    public uint fUCounter
+    int fixedUpdateCounter = 0;
+    public int fUCounter
     {
         get => fixedUpdateCounter;
     }
@@ -34,6 +35,14 @@ public class EnemyManager : MonoBehaviour
         get => lookingAroundTimer;
     }
 
+    int[] fixedCounts;
+
+    public void Initialise(){
+        fixedCounts = new int[maxFixedUpdateCount];
+        for(int i = 0; i < fixedCounts.Length; i++){
+            fixedCounts[i] = 0;
+        }
+    }
     private void FixedUpdate()
     {
         fixedUpdateCounter = ++fixedUpdateCounter % fixedUpdateCount;
@@ -55,12 +64,36 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnEnemy(Vector3 vec){
         GameObject tempEnemy = GetRandomEnemy();
+        
         vec.y = tempEnemy.transform.position.y;
+        
         tempEnemy.GetComponent<EnemyMainScript>().curManager = transform.GetComponent<EnemyManager>();
-        Instantiate(tempEnemy, vec, Quaternion.Euler(new Vector3(0, Random.Range(0,360) ,0)));
+        tempEnemy.GetComponent<EnemyMainScript>().startToWatch = GetIndexFixedCounts();
+        tempEnemy = Instantiate(tempEnemy, vec, Quaternion.Euler(new Vector3(0, Random.Range(0,360) ,0)));
+        tempEnemy.GetComponent<EnemyMainScript>().GetGun(Instantiate(GetRandomGun(), transform));
     }
 
     private GameObject GetRandomEnemy(){
         return enemy[Random.Range(0, enemy.Length)];
     }
+
+    private GameObject GetRandomGun(){
+        return guns[Random.Range(0, guns.Length)];
+    }
+
+    private int GetIndexFixedCounts(){
+        int index = 0;
+        for(int i = 1; i < fixedCounts.Length; i++){
+            if(fixedCounts[index] > fixedCounts[i]){
+                index = i;
+            }
+        }
+        fixedCounts[index]++;
+        return index;
+    }
+
+    public void ClearIndexFixedCounts(int index){
+        fixedCounts[index] --;
+    }
+
 }

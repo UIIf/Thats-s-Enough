@@ -11,13 +11,12 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     private CamScript camScript;
     private Animator animator;
 
-    rayWeapon[] holded_guns = { null, null };
+    WeaponInterface[] holded_guns = { null, null };
 
     void Awake()
     {
         camScript = GetComponent<CamScript>();
         animator = GetComponent<Animator>();
-
     }
 
     void Update()
@@ -65,6 +64,18 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
 
     private void PlaceGun(GameObject gun)
     {
+        holded_guns[0] = gun.GetComponent<rayWeapon>();
+
+        switch(holded_guns[0].GetGunType()){
+            case gunType.oneHanded:
+                animator.SetBool("nowOneHanded", true);
+                break;
+
+            case gunType.twoHanded:
+                animator.SetBool("nowTwoHanded", true);
+                break;
+        }
+
         Transform newGunTrans = gun.transform;
         newGunTrans.parent = hand.transform;
         newGunTrans.localPosition = Vector3.zero;
@@ -74,7 +85,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag != "Weapon" || other.gameObject.GetComponent<dropWeaponScript>()) return;
-
+        if(holded_guns[0] != null) return;
         GameObject newGun = other.gameObject;
         if (newGun.GetComponent<Rigidbody>())
         {
@@ -87,8 +98,8 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             boxcol[i].enabled = false;
         }
 
-        animator.SetBool("nowTwoHanded", true);
+        
         PlaceGun(newGun);
-        holded_guns[0] = newGun.GetComponent<rayWeapon>();
+        
     }
 }

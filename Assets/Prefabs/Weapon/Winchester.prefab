@@ -367,7 +367,6 @@ GameObject:
   - component: {fileID: 4593615570245303977}
   - component: {fileID: 7913548070486750866}
   - component: {fileID: 2785045355789019784}
-  - component: {fileID: 4853668879162700648}
   m_Layer: 8
   m_Name: Winchester
   m_TagString: Weapon
@@ -382,7 +381,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7041321592485275438}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.49999997, y: -0.50000006, z: -0.50000006, w: 0.49999997}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -419,7 +418,7 @@ BoxCollider:
   m_GameObject: {fileID: 7041321592485275438}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.4, y: 0.28, z: 0.1}
   m_Center: {x: -0.27, y: -0.05, z: 0}
@@ -442,6 +441,7 @@ MonoBehaviour:
   notifyColor: {r: 0, g: 1, b: 0, a: 1}
   shootDelay: 0.6
   maxAmmo: 7
+  type: 1
   shotSound: {fileID: 8300000, guid: 548790b88f7d9214ab56e113e5f4d80a, type: 3}
   emptySound: {fileID: 8300000, guid: 7cbdac65443a82e4aafee081fbfd72fb, type: 3}
   rayTray: {fileID: 1941773262079783044, guid: 5b037c92db580ae4db4769d2c676e3a5, type: 3}
@@ -541,20 +541,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4853668879162700648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7041321592485275438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea217a1158f62848b2bda86bf2de073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  angle: 15
 --- !u!1 &7254341190148931372
 GameObject:
   m_ObjectHideFlags: 0

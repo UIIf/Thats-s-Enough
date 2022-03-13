@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum gunType{
+    oneHanded,
+    twoHanded
+}
 public interface WeaponInterface
 {
     public void Shoot(Vector3 targetPoint);
@@ -9,6 +13,8 @@ public interface WeaponInterface
 
     public int GetMaxAmmo();
     public int GetAmmo();
+
+    public gunType GetGunType();
 }
 
 public interface BulletInterface

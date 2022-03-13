@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -345,7 +345,9 @@ MonoBehaviour:
   generationChance:
   - 0.95
   - 0.05
-  weaponList: []
+  weaponList:
+  - {fileID: 3632254487486573120, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
+  - {fileID: 7041321592485275438, guid: 78bd89deef0c3464183d3213381a8225, type: 3}
   generatedGunRoom: {fileID: 0}
 --- !u!114 &503694995
 MonoBehaviour:
@@ -392,6 +394,9 @@ MonoBehaviour:
   - {fileID: 6618296098472652219, guid: 91a44f486d34e7a40b854b3bf408631f, type: 3}
   - {fileID: 6545861738228640763, guid: 1fd02c11f8e62434bbb1257361e41071, type: 3}
   - {fileID: 2428692346933527589, guid: 5580c9793d98c9c4b9065fb9fe104ad5, type: 3}
+  guns:
+  - {fileID: 3632254487486573120, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
+  - {fileID: 7041321592485275438, guid: 78bd89deef0c3464183d3213381a8225, type: 3}
   enemyTarget: {fileID: 346118857}
   fixedUpdateCount: 50
   lookingAroundTimer: 1
@@ -833,6 +838,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10ed1107eafe8674b96f37b3c859dec0, type: 3}
+--- !u!1 &911078477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7041321592485275438, guid: 78bd89deef0c3464183d3213381a8225, type: 3}
+  m_PrefabInstance: {fileID: 1924402703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &911078483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911078477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea217a1158f62848b2bda86bf2de073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  angle: 15
 --- !u!1001 &936002464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1456,6 +1480,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7458740085078086655, guid: 581b0279efc91a540bbefb91bccd8663, type: 3}
   m_PrefabInstance: {fileID: 1185344559}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1483396615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3632254487486573120, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
+  m_PrefabInstance: {fileID: 3632254488133887969}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1483396621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483396615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea217a1158f62848b2bda86bf2de073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  angle: 15
 --- !u!1001 &1557313847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1946,6 +1989,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4593615570245303977, guid: 78bd89deef0c3464183d3213381a8225, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7041321592485275438, guid: 78bd89deef0c3464183d3213381a8225, type: 3}
       propertyPath: m_Name
       value: Winchester
@@ -2351,6 +2398,10 @@ PrefabInstance:
     - target: {fileID: 3632254487486573120, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632254487486573124, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3632254487486573126, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
       propertyPath: m_RootOrder

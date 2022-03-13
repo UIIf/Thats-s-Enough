@@ -511,7 +511,7 @@ MonoBehaviour:
   destenationPoint: {x: 0, y: 0, z: 0}
   walkSpeed: 2
   chosenPatrolPoint: 0
-  distFromPatrolPoint: 5
+  distFromPatrolPoint: 2
   state: 0
   dis: 0
   startWaiting: 0
@@ -531,6 +531,7 @@ MonoBehaviour:
   curManager: {fileID: 0}
   _HP: 100
   deathParticl: {fileID: 5008549359479772449, guid: 26bb030deebc8e644a15c19e809dd712, type: 3}
+  hand: {fileID: 8947761391138837506}
   viewDistance: 6
   closeRange: 1
   viewAngle: 90

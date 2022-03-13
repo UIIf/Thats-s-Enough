@@ -9,6 +9,8 @@ public class gunScript: MonoBehaviour, WeaponInterface
     [SerializeField] private GameObject bullet;
     [SerializeField] private int range;
 
+    [SerializeField] gunType type;
+
     GameObject barrel;
 
     private int ammoCount;
@@ -71,6 +73,10 @@ public class gunScript: MonoBehaviour, WeaponInterface
     public int GetAmmo()
     {
         return ammoCount;
+    }
+
+     public gunType GetGunType(){
+        return type;
     }
 
 }

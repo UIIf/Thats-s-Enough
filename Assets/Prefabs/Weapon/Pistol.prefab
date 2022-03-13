@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3632254487486573124}
   - component: {fileID: 3632254487486573125}
   - component: {fileID: 3632254487486573123}
-  - component: {fileID: 3632254487486573122}
   m_Layer: 8
   m_Name: Pistol
   m_TagString: Weapon
@@ -28,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3632254487486573120}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.331, z: 3.75}
+  m_LocalRotation: {x: 0.49999997, y: -0.50000006, z: -0.50000006, w: 0.49999997}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3632254487622350685}
@@ -61,7 +60,7 @@ BoxCollider:
   m_GameObject: {fileID: 3632254487486573120}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.31573746, y: 0.29043445, z: 0.16632608}
   m_Center: {x: -0.068734795, y: 0.022120792, z: -0.005201772}
@@ -84,6 +83,7 @@ MonoBehaviour:
   notifyColor: {r: 0, g: 1, b: 0, a: 1}
   shootDelay: 0.2
   maxAmmo: 100
+  type: 0
   shotSound: {fileID: 8300000, guid: 0efcb98d58a57d0418689d9b14053154, type: 3}
   emptySound: {fileID: 8300000, guid: 7cbdac65443a82e4aafee081fbfd72fb, type: 3}
   rayTray: {fileID: 1941773262079783044, guid: 5b037c92db580ae4db4769d2c676e3a5, type: 3}
@@ -183,20 +183,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3632254487486573122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3632254487486573120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bea217a1158f62848b2bda86bf2de073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  angle: 15
 --- !u!1 &3632254487622350682
 GameObject:
   m_ObjectHideFlags: 0

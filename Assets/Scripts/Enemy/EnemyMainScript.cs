@@ -14,6 +14,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     [SerializeField] public EnemyManager curManager;
     [SerializeField] private float _HP;
     [SerializeField] GameObject deathParticl;
+    [SerializeField] GameObject hand;
     EnemyMovement eMovement;
 
     [Header("Visibility")]
@@ -23,9 +24,10 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     [SerializeField] float viewAngle = 90f;
     [SerializeField] float shootingRange = 4f;
     [SerializeField] float lookingAroundTime;
-    public uint startToWatch;
+    public int startToWatch;
     [SerializeField] bool isLookingAround = false;
     [SerializeField] bool drawOnGizmos = false;
+    private WeaponInterface gun;
 
 
     //[Header("Target")]
@@ -35,7 +37,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     private void Awake()
     {
-        startToWatch = curManager.maxFixedUpdateCount + 1;
+        // startToWatch = curManager.maxFixedUpdateCount + 1;
         target = curManager.trarget;
         // //Debug 
         // startToWatch = 20;
@@ -199,6 +201,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     ~EnemyMainScript()
     {
+        curManager.ClearIndexFixedCounts(startToWatch);
         StopAllCoroutines();
     }
 
@@ -209,5 +212,24 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         StopAllCoroutines();
         StartCoroutine("LookAround");
         eMovement.checkPoint(point);
+    }
+
+    public void GetGun(GameObject newgun){
+        gun= newgun.GetComponent<rayWeapon>();
+
+        // switch(gun.GetGunType()){
+        //     case gunType.oneHanded:
+        //         animator.SetBool("nowOneHanded", true);
+        //         break;
+
+        //     case gunType.twoHanded:
+        //         animator.SetBool("nowTwoHanded", true);
+        //         break;
+        // }
+
+        Transform newGunTrans = newgun.transform;
+        newGunTrans.parent = hand.transform;
+        newGunTrans.localPosition = Vector3.zero;
+        newGunTrans.localRotation = Quaternion.Euler(180, 90, 90);
     }
 }

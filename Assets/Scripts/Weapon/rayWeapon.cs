@@ -18,6 +18,8 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
     [SerializeField] private float shootDelay;
     [SerializeField] private int maxAmmo;
 
+    [SerializeField] gunType type;
+
     [Header("Audio")]
     [SerializeField] private AudioClip shotSound;
     [SerializeField] private AudioClip emptySound;
@@ -116,5 +118,9 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
         yield return new WaitForSecondsRealtime(shootDelay);
         canShoot = true;
         yield break;
+    }
+
+    public gunType GetGunType(){
+        return type;
     }
 }

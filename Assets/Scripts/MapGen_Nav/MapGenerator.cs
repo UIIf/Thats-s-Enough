@@ -70,6 +70,7 @@ public class MapGenerator : MonoBehaviour
     void Awake()
     {
         wallSize /= 2;
+        eManager.Initialise();
         ChekPersents();
         GetAllComponents();
         GenerateRooms();
