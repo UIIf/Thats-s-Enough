@@ -106,7 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   barrel: {fileID: 5376049568594377303}
   isPlayerGun: 1
-  notifyRadius: 25
+  notifyRadius: 7
   showNotifyRadius: 1
   notifyColor: {r: 0, g: 1, b: 0, a: 1}
   shootDelay: 0.04

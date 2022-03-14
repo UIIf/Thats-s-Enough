@@ -53,7 +53,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
 
     private void Death()
     {
-        print("You're dead");
+        //print("You're dead");
     }
 
     public void GetDamage(float dmg)

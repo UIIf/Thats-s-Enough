@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -346,9 +346,10 @@ MonoBehaviour:
   - 0.95
   - 0.05
   weaponList:
-  - {fileID: 3632254487486573120, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
   - {fileID: 7041321592485275438, guid: 78bd89deef0c3464183d3213381a8225, type: 3}
   - {fileID: 8703027685165043467, guid: 1091252315c8f2b439fbe398851cd94e, type: 3}
+  usedGuns:
+  - {fileID: 3632254487486573120, guid: 13f99114a9247e742be83c36ff927ea8, type: 3}
   generatedGunRoom: {fileID: 0}
 --- !u!114 &503694995
 MonoBehaviour:
@@ -470,6 +471,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 427998388982216594, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 822166417053643191, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381099901715200152, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541734796046260470, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 3862285071431546919, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
       propertyPath: m_Name
       value: player
@@ -549,6 +566,18 @@ PrefabInstance:
     - target: {fileID: 4526759069163774621, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5761944831391407748, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899887430628276114, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151499825139797502, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 961eef3eb80ca344cacc268323fdc9eb, type: 3}

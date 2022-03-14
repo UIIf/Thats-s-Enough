@@ -40,14 +40,14 @@ public class rayWeapon : MonoBehaviour, WeaponInterface
         canShoot = true;
     }
 
-    /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (showNotifyRadius)
         {
             Handles.color = notifyColor;
             Handles.DrawWireArc(barrel.position, Vector3.up, Vector3.forward, 360, notifyRadius);
         }
-    }*/
+    }
     public bool Shoot(Vector3 targetPoint)
     {
         if (!canShoot) return false;

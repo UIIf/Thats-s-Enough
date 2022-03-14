@@ -55,7 +55,8 @@ public class MapGenerator : MonoBehaviour
 
     [Tooltip("0 - %main room\n1 - %gun room")]
     [SerializeField] private float[] generationChance = {0.95f,0.05f}; 
-    [SerializeField] private GameObject[] weaponList;
+    [SerializeField] private List<GameObject> weaponList;
+    [SerializeField] private List<GameObject> usedGuns;
 
     private Transform _folowingTransform, _transform;
     private float maximilian;
@@ -71,6 +72,7 @@ public class MapGenerator : MonoBehaviour
     {
         wallSize /= 2;
         eManager.Initialise();
+        eManager.guns = usedGuns;
         ChekPersents();
         GetAllComponents();
         GenerateRooms();
@@ -192,7 +194,10 @@ public class MapGenerator : MonoBehaviour
         switch(index){
             case 1:
                 roomType = RoomType.gunRoom;
-                generatedWalls[4] = Instantiate(gunRoom, new Vector3(cX, 0, cZ), Quaternion.Euler(new Vector3(0, Random.Range(0,2) * 180 ,0)));
+                generatedWalls[4] = Instantiate(gunRoom, new Vector3(cX, 0, cZ), Quaternion.Euler(new Vector3(0, 0 ,0)));
+                GunTable gt =  generatedWalls[4].transform.Find("gunTable").GetComponent<GunTable>();
+                gt.TrigerUsed += UsedAnotherGun;
+                gt.PlaceGun(GetGun());
                 break;
             default:
                 roomType = RoomType.simple;
@@ -313,11 +318,29 @@ public class MapGenerator : MonoBehaviour
 
         }
     }
+
+    public void UsedAnotherGun(){
+        Debug.Log("WeaponSwitched");
+        if(weaponList.Count > 0){
+            usedGuns.Add(weaponList[0]);
+            eManager.guns = usedGuns;
+            weaponList.RemoveAt(0);
+        }
+    }
     
     
     GameObject RandomXWall()
     {
         return outerWX[Random.Range(0, outerWX.Length)];
+    }
+
+    GameObject GetGun()
+    {
+        if(weaponList.Count > 0){
+            return weaponList[0];
+        }
+        
+        return usedGuns[Random.Range(0, usedGuns.Count)];        
     }
 
     GameObject RandomZWall()

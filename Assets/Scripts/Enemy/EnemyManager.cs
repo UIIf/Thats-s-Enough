@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     [Header("Enemys")]
     [SerializeField] GameObject[] enemy;
-    [SerializeField] GameObject[] guns;
+    [SerializeField] public List<GameObject> guns;
     [Header("Enemy view")]
 
     [SerializeField] Transform enemyTarget;
@@ -78,7 +78,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     private GameObject GetRandomGun(){
-        return guns[Random.Range(0, guns.Length)];
+        return guns[Random.Range(0, guns.Count)];
     }
 
     private int GetIndexFixedCounts(){
