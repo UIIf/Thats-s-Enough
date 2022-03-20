@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-enum botState{
+public enum botState{
     patrol,
     chase,
-    lookAround
+    lookAround,
+    stasis
 }
 
 public class EnemyMainScript : MonoBehaviour, Humanoid
@@ -17,6 +18,8 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     [SerializeField] GameObject hand;
 
     [SerializeField] float shootDelay = 1f;
+    [SerializeField] float shootingDelta = 0.5f;
+    [SerializeField] float stasisTime = 1.5f;
     [SerializeField ]private bool canShoot;
     [SerializeField]private botState state;
     EnemyMovement eMovement;
@@ -57,9 +60,52 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         StartCoroutine("LookingCoroutine");
     }
 
+    public void ChangeState(botState newState){
+        state = newState;
+        switch(state){
+            case botState.chase:
+                animator.SetBool("isWalking", true);
+                StartCoroutine("RunForTarget");
+            break;
+            case botState.lookAround:
+                animator.SetBool("isWalking", true);
+                StartCoroutine("LookAround");
+            break;
+            case botState.patrol:
+                animator.SetBool("isWalking", true);
+                StartCoroutine("LookingCoroutine");
+            break;
+            case botState.stasis:
+                animator.SetBool("isWalking", false);
+                StartCoroutine("StasisCoroutine");
+            break;
+        }
+    }
+
+    public void ReactOnShot(Vector3 point)
+    {
+        if(state == botState.patrol || state == botState.lookAround){
+            eMovement.checkPoint(point);
+            StopCoroutine("LookingCoroutine");
+            StopCoroutine("LookAround");
+            StopCoroutine("LookAroundTimer");
+            ChangeState(botState.lookAround);
+        }
+        // StartCoroutine("LookAround");
+        
+    }
+
+    IEnumerator StasisCoroutine()
+    {
+        // state = botState.patrol;
+        eMovement.changeState(botMoveState.stasis);
+        yield return new WaitForSecondsRealtime(stasisTime);
+        ChangeState(botState.patrol);
+        yield break;
+    }
     IEnumerator LookingCoroutine()
     {
-        state = botState.patrol;
+        // state = botState.patrol;
         eMovement.changeState(botMoveState.patrol);
         while (startToWatch != curManager.fUCounter)
             yield return new WaitForFixedUpdate();
@@ -73,29 +119,30 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
                 yield return new WaitForFixedUpdate();
             }
         }
-        
-        StartCoroutine("RunForTarget");
+        ChangeState(botState.chase);
+        // StartCoroutine("RunForTarget");
     }
 
     IEnumerator RunForTarget()
     {
-        state = botState.chase;
+        // state = botState.chase;
         eMovement.changeState(botMoveState.onTarget);
         while (SeeTarget())
         {
             if(canShoot){
                 if(Shoot()){
-                    StartCoroutine("ShootDelay");
+                    StartCoroutine(ShootDelay(shootDelay + Random.Range(0,shootingDelta)));
                 }
             }
             
             yield return new WaitForFixedUpdate();
         }
-        StartCoroutine("LookAround");
+        ChangeState(botState.lookAround);
+        // StartCoroutine("LookAround");
         yield break;
     }
 
-    IEnumerator ShootDelay(){
+    IEnumerator ShootDelay(float time){
         canShoot = false;
         yield return new WaitForSecondsRealtime(shootDelay);
         canShoot = true;
@@ -104,7 +151,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     IEnumerator LookAround()
     {
-        state = botState.lookAround;
+        // state = botState.lookAround;
         eMovement.changeState(botMoveState.wait);
         isLookingAround = true;
         lookingAroundTime = curManager.lookArT;
@@ -209,7 +256,6 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
     public void GetDamage(float dmg)
     {
         _HP -= dmg;
-        print("Ouch");
         if(_HP <= 0)
         {
             Death();
@@ -229,14 +275,7 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
 
     //PUBLIC
 
-    public void ReactOnShot(Vector3 point)
-    {
-        canShoot = true;
-        StopAllCoroutines();
-        StartCoroutine("LookAround");
-        eMovement.checkPoint(point);
-        
-    }
+ 
 
     public void GetGun(GameObject newgun){
         gun = newgun.GetComponent<rayWeapon>();
@@ -256,4 +295,17 @@ public class EnemyMainScript : MonoBehaviour, Humanoid
         newGunTrans.localPosition = Vector3.zero;
         newGunTrans.localRotation = Quaternion.Euler(180, 90, 90);
     }
+    
+    void OnCollisionEnter(Collision collision){
+        
+        if(collision.gameObject.layer == LayerMask.NameToLayer("weapon")){
+            Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+            if(rb != null && rb.velocity.magnitude > 1){
+                StopAllCoroutines();
+                canShoot = true;
+                ChangeState(botState.stasis);
+            }
+        }
+    }
+
 }

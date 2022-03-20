@@ -7,7 +7,8 @@ public enum botMoveState
 {
     patrol,
     onTarget,
-    wait
+    wait,
+    stasis
 }
 public class EnemyMovement : MonoBehaviour
 {
@@ -130,6 +131,9 @@ public class EnemyMovement : MonoBehaviour
         curPatrolPoints = null;
         startWaiting = false;
         state = newState;
+        if(state == botMoveState.stasis){
+            agent.isStopped = true;
+        }
     }
 
     public void checkPoint(Vector3 point)

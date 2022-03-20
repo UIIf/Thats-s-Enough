@@ -7,7 +7,6 @@ public class GunTable : MonoBehaviour
 {
     public UnityAction TrigerUsed;
     private void OnTriggerEnter(Collider other){
-        Debug.Log("SMTH");
         if (other.tag != "Player") return;
         TrigerUsed.Invoke();
         Destroy(gameObject);
