@@ -11,7 +11,10 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     [SerializeField] float dropGunForce;
     [SerializeField] GameObject HealthBar;
     [SerializeField] Text AmmoUI;
+    [SerializeField] float fightDelay;
+    [SerializeField] float regenerationMultiplier;
 
+    float currentFightDelay = 0;
     private CamScript camScript;
     private Animator animator;
 
@@ -31,6 +34,7 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
         {
             if (holded_guns[0] != null)
             {
+                currentFightDelay = fightDelay;
                 holded_guns[0].Shoot(camScript.targetPoint);
                 AmmoUI.text = holded_guns[0].GetAmmo().ToString();
             }
@@ -47,6 +51,14 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
             }
         }
 
+        if(currentFightDelay >= 0)
+            currentFightDelay -= Time.deltaTime;
+
+        if (currentFightDelay <= 0 && _HP < 1000) {
+            _HP += regenerationMultiplier * Time.deltaTime;
+            RefreshHealthBar();
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(0);
     }
@@ -58,8 +70,9 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
 
     public void GetDamage(float dmg)
     {
+        currentFightDelay = fightDelay;
         _HP -= dmg;
-        HealthBar.transform.localScale = new Vector2((_HP/100) > 0? _HP/100 : 0, 1);
+        RefreshHealthBar();
         if (_HP <= 0)
         {
             Death();
@@ -69,6 +82,11 @@ public class MainPlayerScript :MonoBehaviour, Humanoid
     public float GetHP()
     {
         return _HP;
+    }
+
+    public void RefreshHealthBar()
+    {
+        HealthBar.transform.localScale = new Vector2((_HP / 1000) > 0 ? _HP / 1000 : 0, 1);
     }
 
     private void PlaceGun(GameObject gun)

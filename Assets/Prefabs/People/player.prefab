@@ -629,7 +629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3862285071431546919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 2410855546727402165}
@@ -730,7 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3c425946df5fe4ab9922a1bef30e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camY: 8
+  camY: 15
   cam: {fileID: 0}
   maxShotDist: 12
   percntsCamDist: 0.3
@@ -749,9 +749,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bce7225514909418ff476f7cb538a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _HP: 100
+  _HP: 1000
   hand: {fileID: 4559713169538783524}
   dropGunForce: 0
+  HealthBar: {fileID: 0}
+  AmmoUI: {fileID: 0}
+  fightDelay: 3
+  regenerationMultiplier: 0.01
 --- !u!114 &5063100386152059552
 MonoBehaviour:
   m_ObjectHideFlags: 0

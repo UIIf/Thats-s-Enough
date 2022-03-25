@@ -6,8 +6,14 @@ public class dropWeaponScript : MonoBehaviour
 {
     Rigidbody rb;
     public float speed = 18f, angle = 0f;
-    private bool delay;
+    private bool delay = false;
+    private bool grounded = false;
     private float startTime;
+
+    ParticleSystem _particleSystem;
+    rayWeapon _rW;
+
+    float lifetime = 2;
 
     void Start()
     {
@@ -32,35 +38,58 @@ public class dropWeaponScript : MonoBehaviour
 
         rb.AddForce(new Vector3(-Mathf.Cos(rot.y * Mathf.Deg2Rad), Mathf.Sin(angle), Mathf.Sin(rot.y * Mathf.Deg2Rad)) * speed, ForceMode.Impulse);
         //rb.AddForce(transform.rotation.eulerAngles.normalized * speed , ForceMode.Impulse);
-        delay = false;
         startTime = 0;
+
+        _rW = GetComponent<rayWeapon>();
+        _particleSystem = GetComponent<ParticleSystem>();
     }
 
     void FixedUpdate()
     {
-        if( delay &&
+
+        if(grounded && _rW.GetAmmo() <= 0)
+        {
+            if (!_particleSystem.isPlaying)
+                _particleSystem.Play();
+
+            lifetime -= Time.fixedDeltaTime;
+            if (lifetime <= 0)
+                Destroy(gameObject);
+        }
+        else if(delay && rb == null)
+        {
+            Destroy(gameObject.GetComponent<dropWeaponScript>());
+        }
+
+        //после того, как прошел delay после выкидывания
+        if ( delay &&
+            rb != null &&
             Mathf.Abs(rb.velocity.x) < 0.02f &&
             Mathf.Abs(rb.velocity.y) < 0.02f &&
             Mathf.Abs(rb.velocity.z) < 0.02f)
         {
             Destroy(rb);
-            BoxCollider[] boxcol = gameObject.GetComponents<BoxCollider>();
-            for (int i = 0; i < boxcol.Length; i++)
-            {
-                if (boxcol[i].isTrigger)
-                {
-                    boxcol[i].enabled = true;
-                }
-                else
-                {
-                    boxcol[i].enabled = false;
-                }
+            rb = null;
+            grounded = true;
 
+            if (_rW.GetAmmo() <= 0){
+
+                BoxCollider[] boxcol = gameObject.GetComponents<BoxCollider>();
+                for (int i = 0; i < boxcol.Length; i++)
+                {
+                    if (boxcol[i].isTrigger)
+                    {
+                        boxcol[i].enabled = true;
+                    }
+                    else
+                    {
+                        boxcol[i].enabled = false;
+                    }
+                }
             }
-            //���������� ������� ������� � �����... ������� ��
-            Destroy(gameObject.GetComponent<dropWeaponScript>());
         }
 
+        //delay сразу после выкидывания чтобы оружие успело отлететь
         if (!delay)
         {
             startTime += Time.fixedDeltaTime;

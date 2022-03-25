@@ -506,14 +506,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 396b2c37bd9ca954999e0fa9d8875e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   target: {fileID: 0}
-  closeRange: 0
+  shootingRange: 0
   destenationPoint: {x: 0, y: 0, z: 0}
   walkSpeed: 2
   chosenPatrolPoint: 0
   distFromPatrolPoint: 2
   state: 0
-  dis: 0
   startWaiting: 0
 --- !u!114 &2428692346933527585
 MonoBehaviour:
@@ -527,19 +527,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d335bb1fab27a848914e2759dbe209b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showCoroutine: 
   curManager: {fileID: 0}
   _HP: 100
-  deathParticl: {fileID: 5008549359479772449, guid: 26bb030deebc8e644a15c19e809dd712, type: 3}
   hand: {fileID: 8947761391138837506}
-  viewDistance: 6
+  shootDelay: 1
+  shootingDelta: 0.5
+  stasisTime: 1.5
+  canShoot: 0
+  state: 0
+  viewDistance: 16
   closeRange: 1
   viewAngle: 90
   shootingRange: 4
   lookingAroundTime: 0
-  startToWatch: 0
+  startToWatch: 34
   isLookingAround: 0
   drawOnGizmos: 0
+  DebugCount: 0
 --- !u!1 &2827678812214433811
 GameObject:
   m_ObjectHideFlags: 0

@@ -829,14 +829,15 @@ MonoBehaviour:
   hand: {fileID: 526698850733767644}
   shootDelay: 1
   shootingDelta: 0.5
+  stasisTime: 1.5
   canShoot: 0
   state: 0
-  viewDistance: 6
+  viewDistance: 16
   closeRange: 1
   viewAngle: 90
   shootingRange: 4
   lookingAroundTime: 0
-  startToWatch: 0
+  startToWatch: 35
   isLookingAround: 0
   drawOnGizmos: 0
   DebugCount: 0
